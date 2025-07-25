@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Intelligent Treatment Planner</title>
+    <link rel="stylesheet" href="style/treatment-planning.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Intelligent Treatment Planner</h1>
+        <p>Create AI-optimized plans based on vitals, symptoms, and preferences.</p>
+
+        <form id="treatmentForm">
+            <div class="form-group">
+                <label for="name">Patient Name:</label>
+                <input type="text" id="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="date">Select Date:</label>
+                <input type="date" id="date" required>
+            </div>
+
+            <div class="form-group">
+                <label for="condition">Medical Condition:</label>
+                <input type="text" id="condition" required>
+            </div>
+
+            <div class="form-group">
+                <label for="symptoms">Symptoms (comma-separated):</label>
+                <input type="text" id="symptoms" placeholder="e.g., fatigue, nausea">
+            </div>
+
+            <div class="form-group">
+                <label for="preferences">Treatment Preference:</label>
+                <select id="preferences">
+                    <option value="minimal">Minimal Side Effects</option>
+                    <option value="cost">Cost Efficient</option>
+                    <option value="quick">Quick Recovery</option>
+                </select>
+            </div>
+
+            <div class="form-group vitals">
+                <h3>Vitals</h3>
+                <label for="bp">Blood Pressure (e.g., 120/80):</label>
+                <input type="text" id="bp" required>
+
+                <label for="sugar">Blood Sugar (mg/dL):</label>
+                <input type="number" id="sugar" required>
+
+                <label for="heartRate">Heart Rate (bpm):</label>
+                <input type="number" id="heartRate" required>
+            </div>
+
+            <button type="submit">Generate Plan</button>
+        </form>
+
+        <div id="result" class="hidden">
+            <h2>📋 Personalized Treatment Plan</h2>
+            <div id="planContent"></div>
+            <canvas id="vitalsChart" width="400" height="200"></canvas>
+            <button onclick="downloadReport()">📥 Download Report</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/treatment-planning.js"></script>
+</body>
+
+</html>

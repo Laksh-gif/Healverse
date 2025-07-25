@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealVerse - AI-Powered Healthcare Revolution</title>
+    <link rel="stylesheet" href="style/styles.css">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Three.js for 3D background -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- 3D Background Canvas -->
+    <div id="3d-background"></div>
+
+    <!-- Navigation -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <div class="logo" data-aos="fade-right">
+                <span class="logo-icon">⚕</span>
+                <span>HealVerse</span>
+            </div>
+
+            <nav class="nav-links">
+                <a href="#home" class="nav-link active" data-aos="fade-down" data-aos-delay="100">Home</a>
+                <a href="#features" class="nav-link" data-aos="fade-down" data-aos-delay="150">Features</a>
+                <a href="#solutions" class="nav-link" data-aos="fade-down" data-aos-delay="200">Solutions</a>
+                <a href="#testimonials" class="nav-link" data-aos="fade-down" data-aos-delay="250">Testimonials</a>
+                <a href="#contact" class="nav-link" data-aos="fade-down" data-aos-delay="300">Contact</a>
+            </nav>
+
+            <div class="nav-actions" data-aos="fade-left">
+                <a href="#" class="btn-secondary pulse-animate">Login</a>
+                <a href="#" class="btn-primary pulse-animate">Get Started</a>
+            </div>
+
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-heading">
+                    <span class="highlight">Healthcare</span> with AI
+                </h1>
+                <p class="hero-subtext">
+                    HealVerse combines cutting-edge AI with medical expertise to deliver personalized,
+                    predictive healthcare solutions that improve outcomes and reduce costs.
+                </p>
+                <div class="hero-cta">
+                    <a href="#" class="btn btn-primary pulse-animate">
+                        <i class="fas fa-rocket"></i> Start Free Trial
+                    </a>
+                    <a href="#" class="btn btn-secondary pulse-animate" style="animation-delay: 0.2s">
+                        <i class="fas fa-play-circle"></i> Watch Demo
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">95%</div>
+                        <div class="stat-label">Diagnostic Accuracy</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">10k+</div>
+                        <div class="stat-label">Patients Served</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">40%</div>
+                        <div class="stat-label">Faster Recovery</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <!-- <div class="ai-doctor-container">
+                    <img src="ai-doctor.png" alt="AI Doctor" class="ai-doctor">
+
+                    <div class="vital-signs-orbit">
+                        <div class="vital-sign heart-rate">
+                            <i class="fas fa-heartbeat"></i>
+                            <span>Heart Rate</span>
+                        </div>
+                        <div class="vital-sign temperature">
+                            <i class="fas fa-thermometer-half"></i>
+                            <span>Temp</span>
+                        </div>
+                        <div class="vital-sign blood-pressure">
+                            <i class="fas fa-tint"></i>
+                            <span>BP Monitor</span>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Badges -->
+    <section class="trust-section">
+        <div class="container">
+            <p class="trust-label">Trusted by leading healthcare providers worldwide</p>
+            <div class="trust-logos">
+                <img src="assets/logo-mayo.png" alt="Mayo Clinic" data-aos="zoom-in">
+                <img src="assets/logo-johns-hopkins.png" alt="Johns Hopkins" data-aos="zoom-in" data-aos-delay="100">
+                <img src="assets/logo-cleveland.png" alt="Cleveland Clinic" data-aos="zoom-in" data-aos-delay="200">
+                <img src="assets/logo-stanford.png" alt="Stanford Health" data-aos="zoom-in" data-aos-delay="300">
+                <img src="assets/logo-nih.png" alt="NIH" data-aos="zoom-in" data-aos-delay="400">
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Features -->
+    <section class="features-section" id="features">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">AI-Powered Healthcare Solutions</h2>
+                <p class="section-subtitle">
+                    Our platform integrates multiple technologies to deliver comprehensive care
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <!-- Feature 1 -->
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="feature-title">Advanced Diagnostics</h3>
+                    <p class="feature-description">
+                        Our AI analyzes symptoms, medical history, and test results with 95% accuracy to provide
+                        differential diagnoses.
+                    </p>
+                    <a href="#" class="feature-link">
+                        Learn more <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <div class="feature-wave"></div>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3 class="feature-title">Real-time Monitoring</h3>
+                    <p class="feature-description">
+                        Continuous tracking of 50+ health parameters with smart alerts for abnormal readings.
+                    </p>
+                    <a href="#" class="feature-link">
+                        Learn more <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <div class="feature-wave"></div>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-icon">
+                        <i class="fas fa-procedures"></i>
+                    </div>
+                    <h3 class="feature-title">Treatment Planning</h3>
+                    <p class="feature-description">
+                        Personalized treatment plans optimized for efficacy and minimal side effects.
+                    </p>
+                    <a href="#" class="feature-link">
+                        Learn more <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <div class="feature-wave"></div>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="feature-title">Predictive Analytics</h3>
+                    <p class="feature-description">
+                        Forecast health risks and outcomes with our proprietary predictive models.
+                    </p>
+                    <a href="predictive-analysis.html" class="feature-link">
+                        Learn more <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <div class="feature-wave"></div>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <h3 class="feature-title">Virtual Consultations</h3>
+                    <p class="feature-description">
+                        Secure video consultations with specialists from our global network.
+                    </p>
+                    <a href="#" class="feature-link">
+                        Learn more <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <div class="feature-wave"></div>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="600">
+                    <div class="feature-icon">
+                        <i class="fas fa-pills"></i>
+                    </div>
+                    <h3 class="feature-title">Medication Management</h3>
+                    <p class="feature-description">
+                        Intelligent medication tracking with interaction checks and adherence monitoring.
+                    </p>
+                    <a href="medical-management.html" class="feature-link">
+                        Learn more <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <div class="feature-wave"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solutions Section -->
+    <section class="solutions-section" id="solutions">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Tailored Solutions for Every Need</h2>
+                <p class="section-subtitle">
+                    We provide specialized solutions for different healthcare scenarios
+                </p>
+            </div>
+
+            <div class="solutions-tabs">
+                <div class="tab-header">
+                    <button class="tab-btn active" data-tab="hospitals">Hospitals</button>
+                    <button class="tab-btn" data-tab="clinics">Clinics</button>
+                    <button class="tab-btn" data-tab="telemedicine">Telemedicine</button>
+                    <button class="tab-btn" data-tab="research">Research</button>
+                </div>
+
+                <div class="tab-content">
+                    <div class="tab-pane active" id="hospitals">
+                        <div class="solution-content">
+                            <div class="solution-text" data-aos="fade-right">
+                                <h3>Hospital System Integration</h3>
+                                <p>
+                                    Seamlessly integrate HealVerse with your existing hospital systems for enhanced
+                                    patient care and operational efficiency.
+                                </p>
+                                <ul class="solution-features">
+                                    <li><i class="fas fa-check-circle"></i> Real-time patient monitoring</li>
+                                    <li><i class="fas fa-check-circle"></i> Automated discharge planning</li>
+                                    <li><i class="fas fa-check-circle"></i> Predictive readmission risk scoring</li>
+                                    <li><i class="fas fa-check-circle"></i> Staff workflow optimization</li>
+                                </ul>
+                                <a href="#" class="btn-primary">
+                                    <i class="fas fa-book"></i> Request Hospital Demo
+                                </a>
+                            </div>
+                            <div class="solution-image" data-aos="fade-left">
+                                <img src="assets/hospital-dashboard.jpg" alt="Hospital Dashboard" class="zoom-animate">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="clinics">
+                        <div class="solution-content">
+                            <div class="solution-text" data-aos="fade-right">
+                                <h3>Clinic Practice Management</h3>
+                                <p>
+                                    Streamline your clinic operations with our all-in-one practice management solution
+                                    designed for small to medium healthcare practices.
+                                </p>
+                                <ul class="solution-features">
+                                    <li><i class="fas fa-check-circle"></i> Automated appointment scheduling</li>
+                                    <li><i class="fas fa-check-circle"></i> Integrated billing and coding</li>
+                                    <li><i class="fas fa-check-circle"></i> Patient records management</li>
+                                    <li><i class="fas fa-check-circle"></i> Staff productivity tracking</li>
+                                </ul>
+                                <a href="#" class="btn-primary">
+                                    <i class="fas fa-book"></i> Learn More
+                                </a>
+                            </div>
+                            <div class="solution-image" data-aos="fade-left">
+                                <img src="assets/clinic-dashboard.jpg" alt="Clinic Dashboard" class="zoom-animate">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="telemedicine">
+                        <div class="solution-content">
+                            <div class="solution-text" data-aos="fade-right">
+                                <h3>Virtual Care Platform</h3>
+                                <p>
+                                    Deliver high-quality remote care with our comprehensive telemedicine solution that
+                                    connects providers and patients seamlessly.
+                                </p>
+                                <ul class="solution-features">
+                                    <li><i class="fas fa-check-circle"></i> Secure video consultations</li>
+                                    <li><i class="fas fa-check-circle"></i> Remote patient monitoring</li>
+                                    <li><i class="fas fa-check-circle"></i> Digital prescription services</li>
+                                    <li><i class="fas fa-check-circle"></i> Integrated health records</li>
+                                </ul>
+                                <a href="#" class="btn-primary">
+                                    <i class="fas fa-book"></i> Request Demo
+                                </a>
+                            </div>
+                            <div class="solution-image" data-aos="fade-left">
+                                <img src="assets/telemedicine-platform.jpg" alt="Telemedicine Platform"
+                                    class="zoom-animate">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="research">
+                        <div class="solution-content">
+                            <div class="solution-text" data-aos="fade-right">
+                                <h3>Medical Research Suite</h3>
+                                <p>
+                                    Accelerate your medical research with our AI-powered analytics platform designed for
+                                    clinical trials and medical studies.
+                                </p>
+                                <ul class="solution-features">
+                                    <li><i class="fas fa-check-circle"></i> Patient cohort analysis</li>
+                                    <li><i class="fas fa-check-circle"></i> Predictive modeling</li>
+                                    <li><i class="fas fa-check-circle"></i> Real-time data visualization</li>
+                                    <li><i class="fas fa-check-circle"></i> Regulatory compliance tools</li>
+                                </ul>
+                                <a href="#" class="btn-primary">
+                                    <i class="fas fa-book"></i> Explore Research Tools
+                                </a>
+                            </div>
+                            <div class="solution-image" data-aos="fade-left">
+                                <img src="assets/research-dashboard.jpg" alt="Research Dashboard" class="zoom-animate">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials-section" id="testimonials">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Trusted by Healthcare Professionals</h2>
+                <p class="section-subtitle">
+                    Hear from those who've transformed their practice with HealVerse
+                </p>
+            </div>
+
+            <div class="testimonials-slider">
+                <div class="testimonial-card" data-aos="fade-up">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="testimonial-text">
+                            HealVerse has revolutionized how we diagnose and treat patients. The AI recommendations have
+                            improved our diagnostic accuracy by 30% and reduced treatment time significantly.
+                        </p>
+                        <div class="testimonial-author">
+                            <img src="assets/doctor-1.jpg" alt="Dr. Sarah Johnson" class="author-img pulse-animate">
+                            <div class="author-info">
+                                <h4>Dr. Sarah Johnson</h4>
+                                <p>Chief of Medicine, Boston General</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="testimonial-text">
+                            The predictive analytics have been game-changing for our ICU. We're now able to intervene
+                            before critical situations develop.
+                        </p>
+                        <div class="testimonial-author">
+                            <img src="assets/doctor-2.jpg" alt="Dr. Michael Chen" class="author-img pulse-animate">
+                            <div class="author-info">
+                                <h4>Dr. Michael Chen</h4>
+                                <p>ICU Director, Mayo Clinic</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="testimonial-text">
+                            Our patient satisfaction scores increased by 45% after implementing HealVerse's telemedicine
+                            platform.
+                        </p>
+                        <div class="testimonial-author">
+                            <img src="assets/doctor-3.jpg" alt="Dr. Emily Rodriguez" class="author-img pulse-animate">
+                            <div class="author-info">
+                                <h4>Dr. Emily Rodriguez</h4>
+                                <p>Medical Director, Stanford Health</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonials-cta" data-aos="fade-up">
+                <a href="#" class="btn-secondary">
+                    <i class="fas fa-book-open"></i> Read More Success Stories
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content" data-aos="zoom-in">
+                <h2 class="cta-title">Ready to Transform Your Healthcare Practice?</h2>
+                <p class="cta-text">
+                    Join thousands of healthcare providers using HealVerse to deliver better patient outcomes.
+                </p>
+                <div class="cta-actions">
+                    <a href="#" class="btn-primary btn-lg pulse-animate">
+                        <i class="fas fa-calendar-check"></i> Schedule Demo
+                    </a>
+                    <a href="#" class="btn-secondary btn-lg pulse-animate" style="animation-delay: 0.2s">
+                        <i class="fas fa-phone-alt"></i> Contact Sales
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-about">
+                    <div class="footer-logo">
+                        <span class="logo-icon">⚕</span>
+                        <span>HealVerse</span>
+                    </div>
+                    <p class="footer-about-text">
+                        Revolutionizing healthcare through AI-powered diagnostics, monitoring, and treatment solutions.
+                    </p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-title">Solutions</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">For Hospitals</a></li>
+                        <li><a href="#">For Clinics</a></li>
+                        <li><a href="#">Telemedicine</a></li>
+                        <li><a href="#">Medical Research</a></li>
+                        <li><a href="#">Health Systems</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-title">Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">API Reference</a></li>
+                        <li><a href="#">Case Studies</a></li>
+                        <li><a href="#">White Papers</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-title">Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Leadership</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-title">Get In Touch</h4>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Medical Drive, San Francisco, CA</li>
+                        <li><i class="fas fa-phone-alt"></i> (800) 555-HEAL</li>
+                        <li><i class="fas fa-envelope"></i> info@healverse.com</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    &copy; 2025 HealVerse Technologies. All rights reserved.
+                </div>
+                <div class="footer-legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">HIPAA Compliance</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script>
+        // Initialize AOS animation
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // Initialize typed.js
+        new Typed('.typed-text', {
+            strings: ["AI Diagnostics", "Predictive Analytics", "Remote Monitoring", "Personalized Care"],
+            typeSpeed: 50,
+            backSpeed: 30,
+            loop: true
+        });
+
+        // 3D Background Initialization
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('3d-background').appendChild(renderer.domElement);
+
+        // Add your 3D objects here (molecules, cells, medical symbols)
+        const geometry = new THREE.SphereGeometry(1, 32, 32);
+        const material = new THREE.MeshBasicMaterial({ color: 0x00a8ff, transparent: true, opacity: 0.6 });
+        const sphere = new THREE.Mesh(geometry, material);
+        scene.add(sphere);
+
+        camera.position.z = 5;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            sphere.rotation.x += 0.005;
+            sphere.rotation.y += 0.01;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Mobile menu toggle
+        const navToggle = document.getElementById('navToggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        navToggle.addEventListener('click', () => {
+            navToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Tab functionality
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabPanes = document.querySelectorAll('.tab-pane');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+
+                // Update active tab button
+                tabBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // Show corresponding tab content
+                tabPanes.forEach(pane => {
+                    pane.classList.remove('active');
+                    if (pane.id === tabId) {
+                        pane.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

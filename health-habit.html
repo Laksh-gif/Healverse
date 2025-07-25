@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HealVerse | Habit Builder</title>
+    <link rel="stylesheet" href="style/health-habit.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">💠 HealVerse</div>
+        <div class="theme-toggle">
+            <label class="switch">
+                <input type="checkbox" id="themeSwitch" />
+                <span class="slider round"></span>
+            </label>
+            <span id="theme-label">Light</span>
+        </div>
+    </nav>
+
+    <main class="container">
+        <h1 class="title">Health Habit Builder 🧘‍♀️</h1>
+
+        <form id="habit-form">
+            <input type="text" id="habit-input" placeholder="Add a new habit e.g. Sleep 8 hrs" required />
+            <button type="submit">Add ➕</button>
+        </form>
+
+        <div class="week-switcher">
+            <label for="week-select">📅 Select Week:</label>
+            <select id="week-select">
+                <option value="this">This Week</option>
+                <option value="last">Last Week</option>
+            </select>
+        </div>
+
+        <div id="habits-list"></div>
+
+        <div class="progress-section">
+            <p>Daily Completion</p>
+            <div class="progress-bar-bg">
+                <div id="progress-bar"></div>
+            </div>
+            <button id="reset-button">Reset Today's Habits 🔄</button>
+        </div>
+
+        <div class="analytics-section">
+            <h2>📊 Weekly Analytics</h2>
+            <canvas id="habitChart" height="100"></canvas>
+        </div>
+
+        <div class="calendar-section">
+            <h2>🗓️ Habit Calendar View</h2>
+            <div id="calendar"></div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Made with ❤️ by HealVerse</p>
+    </footer>
+
+    <script src="js/health-habit.js"></script>
+</body>
+
+</html>

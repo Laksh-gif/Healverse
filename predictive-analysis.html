@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Health Predictive Analytics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-light: #6366f1;
+            --primary-dark: #4338ca;
+            --secondary: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --gray: #64748b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 992px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-title i {
+            font-size: 1.2rem;
+        }
+
+        form {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        label {
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        input {
+            padding: 0.75rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-report {
+            background: var(--secondary);
+            color: white;
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        .btn-report:hover {
+            background: #0d9f6e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        th,
+        td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 500;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        tr:hover {
+            background-color: #f1f5f9;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+
+        .status-normal {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-high {
+            background-color: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .status-low {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0.5rem 0;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .trend-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+            font-size: 0.9rem;
+        }
+
+        .trend-up {
+            color: var(--danger);
+        }
+
+        .trend-down {
+            color: var(--secondary);
+        }
+
+        .trend-neutral {
+            color: var(--gray);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-heartbeat"></i> Health Predictive Analytics</h1>
+            <p class="subtitle">Monitor and predict your health metrics with AI-powered analytics</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Average BP</div>
+                <div class="stat-value" id="avg-bp">--</div>
+                <div class="trend-indicator trend-neutral">
+                    <i class="fas fa-equals"></i> <span>Stable</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Average Heart Rate</div>
+                <div class="stat-value" id="avg-hr">--</div>
+                <div class="trend-indicator trend-neutral">
+                    <i class="fas fa-equals"></i> <span>Stable</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Average Sugar</div>
+                <div class="stat-value" id="avg-sugar">--</div>
+                <div class="trend-indicator trend-neutral">
+                    <i class="fas fa-equals"></i> <span>Stable</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard">
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-edit"></i> New Entry</h2>
+                <form id="healthForm">
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="date" id="date" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="bp">Blood Pressure (mmHg)</label>
+                        <input type="number" id="bp" placeholder="e.g. 120" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="hr">Heart Rate (bpm)</label>
+                        <input type="number" id="hr" placeholder="e.g. 72" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="sugar">Sugar Level (mg/dL)</label>
+                        <input type="number" id="sugar" placeholder="e.g. 100" required />
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-plus-circle"></i> Add Entry
+                    </button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-chart-line"></i> Health Trends</h2>
+                <div class="chart-container">
+                    <canvas id="healthChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-table"></i> Health Records</h2>
+            <table id="reportTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>BP (mmHg)</th>
+                        <th>Heart Rate (bpm)</th>
+                        <th>Sugar (mg/dL)</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <button onclick="generatePDF()" class="btn btn-report">
+                <i class="fas fa-file-pdf"></i> Download Full Report
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <script>
+        // Initialize Chart
+        const ctx = document.getElementById('healthChart').getContext('2d');
+        let entries = JSON.parse(localStorage.getItem('healthEntries')) || [];
+
+        // Register plugins
+        Chart.register(ChartDataLabels);
+
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: entries.map(e => e.date),
+                datasets: [
+                    {
+                        label: 'Blood Pressure',
+                        data: entries.map(e => e.bp),
+                        borderColor: '#4f46e5',
+                        backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                        borderWidth: 2,
+                        tension: 0.3,
+                        fill: true,
+                        pointBackgroundColor: '#4f46e5',
+                        pointRadius: 5,
+                        pointHoverRadius: 7
+                    },
+                    {
+                        label: 'Heart Rate',
+                        data: entries.map(e => e.hr),
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        borderWidth: 2,
+                        tension: 0.3,
+                        fill: true,
+                        pointBackgroundColor: '#10b981',
+                        pointRadius: 5,
+                        pointHoverRadius: 7
+                    },
+                    {
+                        label: 'Sugar Level',
+                        data: entries.map(e => e.sugar),
+                        borderColor: '#f59e0b',
+                        backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                        borderWidth: 2,
+                        tension: 0.3,
+                        fill: true,
+                        pointBackgroundColor: '#f59e0b',
+                        pointRadius: 5,
+                        pointHoverRadius: 7
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            font: {
+                                family: 'Poppins',
+                                size: 14
+                            },
+                            padding: 20,
+                            usePointStyle: true,
+                            pointStyle: 'circle'
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        titleFont: {
+                            family: 'Poppins',
+                            size: 14,
+                            weight: 'bold'
+                        },
+                        bodyFont: {
+                            family: 'Poppins',
+                            size: 12
+                        },
+                        padding: 12,
+                        cornerRadius: 8,
+                        displayColors: true,
+                        mode: 'index',
+                        intersect: false
+                    },
+                    datalabels: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Date',
+                            font: {
+                                family: 'Poppins',
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        },
+                        grid: {
+                            display: false
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Value',
+                            font: {
+                                family: 'Poppins',
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    }
+                },
+                interaction: {
+                    mode: 'nearest',
+                    axis: 'x',
+                    intersect: false
+                }
+            }
+        });
+
+        // Form submission
+        document.getElementById('healthForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const date = document.getElementById('date').value;
+            const bp = +document.getElementById('bp').value;
+            const hr = +document.getElementById('hr').value;
+            const sugar = +document.getElementById('sugar').value;
+            const status = getHealthStatus(bp, hr, sugar);
+
+            entries.push({ date, bp, hr, sugar, status });
+            localStorage.setItem('healthEntries', JSON.stringify(entries));
+
+            updateChart();
+            updateTable();
+            updateStats();
+            e.target.reset();
+        });
+
+        function getHealthStatus(bp, hr, sugar) {
+            if (bp > 140 || hr > 100 || sugar > 160) return { text: 'High', class: 'status-high' };
+            if (bp < 90 || hr < 60 || sugar < 70) return { text: 'Low', class: 'status-low' };
+            return { text: 'Normal', class: 'status-normal' };
+        }
+
+        function updateChart() {
+            chart.data.labels = entries.map(e => e.date);
+            chart.data.datasets[0].data = entries.map(e => e.bp);
+            chart.data.datasets[1].data = entries.map(e => e.hr);
+            chart.data.datasets[2].data = entries.map(e => e.sugar);
+            chart.update();
+        }
+
+        function updateTable() {
+            const tbody = document.querySelector('#reportTable tbody');
+            tbody.innerHTML = '';
+
+            entries.slice().reverse().forEach(entry => {
+                const status = getHealthStatus(entry.bp, entry.hr, entry.sugar);
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${entry.date}</td>
+                    <td>${entry.bp}</td>
+                    <td>${entry.hr}</td>
+                    <td>${entry.sugar}</td>
+                    <td><span class="status ${status.class}">${status.text}</span></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function updateStats() {
+            if (entries.length === 0) return;
+
+            // Calculate averages
+            const avgBp = Math.round(entries.reduce((sum, e) => sum + e.bp, 0) / entries.length);
+            const avgHr = Math.round(entries.reduce((sum, e) => sum + e.hr, 0) / entries.length);
+            const avgSugar = Math.round(entries.reduce((sum, e) => sum + e.sugar, 0) / entries.length);
+
+            document.getElementById('avg-bp').textContent = avgBp;
+            document.getElementById('avg-hr').textContent = avgHr;
+            document.getElementById('avg-sugar').textContent = avgSugar;
+
+            // Update trends (simplified example)
+            updateTrendIndicator('bp', avgBp);
+            updateTrendIndicator('hr', avgHr);
+            updateTrendIndicator('sugar', avgSugar);
+        }
+
+        function updateTrendIndicator(metric, currentValue) {
+            if (entries.length < 2) return;
+
+            const prevValue = entries[entries.length - 2][metric];
+            const indicator = document.querySelector(`#avg-${metric}`).nextElementSibling;
+
+            if (currentValue > prevValue) {
+                indicator.className = 'trend-indicator trend-up';
+                indicator.innerHTML = '<i class="fas fa-arrow-up"></i> <span>Increasing</span>';
+            } else if (currentValue < prevValue) {
+                indicator.className = 'trend-indicator trend-down';
+                indicator.innerHTML = '<i class="fas fa-arrow-down"></i> <span>Decreasing</span>';
+            } else {
+                indicator.className = 'trend-indicator trend-neutral';
+                indicator.innerHTML = '<i class="fas fa-equals"></i> <span>Stable</span>';
+            }
+        }
+
+        async function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({
+                orientation: 'portrait',
+                unit: 'mm',
+                format: 'a4'
+            });
+
+            // Title
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(22);
+            doc.setTextColor(79, 70, 229);
+            doc.text('Health Analytics Report', 105, 20, { align: 'center' });
+
+            // Date
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(12);
+            doc.setTextColor(100, 100, 100);
+            doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 105, 28, { align: 'center' });
+
+            // Summary Stats
+            doc.setFontSize(14);
+            doc.setTextColor(0, 0, 0);
+            doc.text('Summary Statistics', 20, 40);
+
+            doc.setFontSize(12);
+            if (entries.length > 0) {
+                const avgBp = Math.round(entries.reduce((sum, e) => sum + e.bp, 0) / entries.length);
+                const avgHr = Math.round(entries.reduce((sum, e) => sum + e.hr, 0) / entries.length);
+                const avgSugar = Math.round(entries.reduce((sum, e) => sum + e.sugar, 0) / entries.length);
+
+                doc.text(`Average Blood Pressure: ${avgBp} mmHg`, 20, 50);
+                doc.text(`Average Heart Rate: ${avgHr} bpm`, 20, 57);
+                doc.text(`Average Sugar Level: ${avgSugar} mg/dL`, 20, 64);
+            } else {
+                doc.text('No data available for summary statistics', 20, 50);
+            }
+
+            // Add line chart
+            if (entries.length > 0) {
+                doc.setFontSize(14);
+                doc.text('Health Trends Over Time', 20, 80);
+
+                // Create a temporary canvas for the chart
+                const tempCanvas = document.createElement('canvas');
+                tempCanvas.width = 800;
+                tempCanvas.height = 400;
+                const tempCtx = tempCanvas.getContext('2d');
+
+                // Clone the chart with simplified options for PDF
+                const tempChart = new Chart(tempCtx, {
+                    type: 'line',
+                    data: chart.data,
+                    options: {
+                        responsive: false,
+                        plugins: {
+                            legend: {
+                                position: 'top'
+                            },
+                            title: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Date'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Value'
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Add the chart image to PDF
+                await new Promise(resolve => setTimeout(resolve, 500)); // Wait for chart to render
+                const chartImg = tempCanvas.toDataURL('image/png');
+                doc.addImage(chartImg, 'PNG', 20, 85, 170, 80);
+
+                // Add pie charts for status distribution
+                doc.setFontSize(14);
+                doc.text('Health Status Distribution', 20, 180);
+
+                // Status counts
+                const statusCounts = {
+                    normal: entries.filter(e => getHealthStatus(e.bp, e.hr, e.sugar).text === 'Normal').length,
+                    high: entries.filter(e => getHealthStatus(e.bp, e.hr, e.sugar).text === 'High').length,
+                    low: entries.filter(e => getHealthStatus(e.bp, e.hr, e.sugar).text === 'Low').length
+                };
+
+                // Create pie chart
+                const pieCanvas = document.createElement('canvas');
+                pieCanvas.width = 400;
+                pieCanvas.height = 400;
+                const pieCtx = pieCanvas.getContext('2d');
+
+                new Chart(pieCtx, {
+                    type: 'pie',
+                    data: {
+                        labels: ['Normal', 'High', 'Low'],
+                        datasets: [{
+                            data: [statusCounts.normal, statusCounts.high, statusCounts.low],
+                            backgroundColor: [
+                                '#d1fae5',
+                                '#fee2e2',
+                                '#fef3c7'
+                            ],
+                            borderColor: [
+                                '#065f46',
+                                '#b91c1c',
+                                '#92400e'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: false,
+                        plugins: {
+                            legend: {
+                                position: 'right'
+                            },
+                            title: {
+                                display: true,
+                                text: 'Status Distribution'
+                            }
+                        }
+                    }
+                });
+
+                await new Promise(resolve => setTimeout(resolve, 500));
+                const pieImg = pieCanvas.toDataURL('image/png');
+                doc.addImage(pieImg, 'PNG', 20, 185, 80, 60);
+            }
+
+            // Add data table
+            doc.setFontSize(14);
+            doc.text('Detailed Health Records', 20, entries.length > 0 ? 260 : 100);
+
+            if (entries.length > 0) {
+                // Table headers
+                doc.setFontSize(12);
+                doc.setTextColor(255, 255, 255);
+                doc.setFillColor(79, 70, 229);
+                doc.rect(20, 265, 170, 8, 'F');
+                doc.text('Date', 25, 270);
+                doc.text('BP', 60, 270);
+                doc.text('HR', 90, 270);
+                doc.text('Sugar', 120, 270);
+                doc.text('Status', 150, 270);
+
+                // Table rows
+                doc.setTextColor(0, 0, 0);
+                let y = 275;
+                entries.slice().reverse().forEach((entry, index) => {
+                    if (index > 0 && index % 25 === 0) {
+                        doc.addPage();
+                        y = 20;
+                        // Repeat header on new page
+                        doc.setFillColor(79, 70, 229);
+                        doc.rect(20, y, 170, 8, 'F');
+                        doc.setTextColor(255, 255, 255);
+                        doc.text('Date', 25, y + 5);
+                        doc.text('BP', 60, y + 5);
+                        doc.text('HR', 90, y + 5);
+                        doc.text('Sugar', 120, y + 5);
+                        doc.text('Status', 150, y + 5);
+                        y += 10;
+                        doc.setTextColor(0, 0, 0);
+                    }
+
+                    const status = getHealthStatus(entry.bp, entry.hr, entry.sugar);
+                    doc.text(entry.date, 25, y);
+                    doc.text(entry.bp.toString(), 60, y);
+                    doc.text(entry.hr.toString(), 90, y);
+                    doc.text(entry.sugar.toString(), 120, y);
+
+                    // Color status based on value
+                    if (status.text === 'High') {
+                        doc.setTextColor(185, 28, 28);
+                    } else if (status.text === 'Low') {
+                        doc.setTextColor(180, 83, 9);
+                    } else {
+                        doc.setTextColor(6, 95, 70);
+                    }
+
+                    doc.text(status.text, 150, y);
+                    doc.setTextColor(0, 0, 0);
+                    y += 7;
+                });
+            } else {
+                doc.setFontSize(12);
+                doc.text('No health records available', 20, 105);
+            }
+
+            // Footer
+            doc.setFontSize(10);
+            doc.setTextColor(100, 100, 100);
+            doc.text('Generated by Health Predictive Analytics Dashboard', 105, 290, { align: 'center' });
+
+            doc.save('Health_Report.pdf');
+        }
+
+        // Initialize
+        updateTable();
+        updateStats();
+    </script>
+</body>
+
+</html>
