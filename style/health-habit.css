@@ -1,0 +1,248 @@
+:root {
+  --bg-light: #f5f7fa;
+  --bg-dark: #121212;
+  --text-light: #1f1f1f;
+  --text-dark: #f4f4f4;
+  --card-light: #ffffff;
+  --card-dark: #1e1e1e;
+  --primary: #6c63ff;
+  --accent: #a78bfa;
+  --shadow: rgba(0, 0, 0, 0.08);
+}
+
+body {
+  font-family: "Segoe UI", sans-serif;
+  margin: 0;
+  padding: 0;
+  background: var(--bg-light);
+  color: var(--text-light);
+  transition: background 0.3s, color 0.3s;
+}
+
+body.dark {
+  background: var(--bg-dark);
+  color: var(--text-dark);
+}
+
+.container {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 30px;
+  background: var(--card-light);
+  border-radius: 20px;
+  box-shadow: 0 10px 25px var(--shadow);
+  transition: background 0.3s;
+}
+
+body.dark .container {
+  background: var(--card-dark);
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(to right, #6c63ff, #a78bfa);
+  padding: 15px 25px;
+  color: white;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--primary);
+}
+
+form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+input[type="text"] {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  border: 2px solid #d1d5db;
+  font-size: 16px;
+  outline: none;
+}
+
+button {
+  background: var(--primary);
+  color: white;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+button:hover {
+  background: #5a54e9;
+}
+
+#habits-list {
+  margin-top: 20px;
+}
+
+.habit-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-light);
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px var(--shadow);
+  transition: background 0.3s;
+}
+
+body.dark .habit-item {
+  background: #2b2b2b;
+}
+
+.habit-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.habit-actions button {
+  background: transparent;
+  font-size: 18px;
+}
+
+.progress-section {
+  margin-top: 30px;
+}
+
+.progress-bar-bg {
+  height: 18px;
+  width: 100%;
+  background: #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 10px 0;
+}
+
+#progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(to right, #6c63ff, #a78bfa);
+  transition: width 0.4s ease;
+}
+
+.analytics-section,
+.calendar-section {
+  margin-top: 40px;
+}
+
+canvas {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+  color: #777;
+}
+
+.week-switcher {
+  margin-bottom: 20px;
+}
+
+select {
+  padding: 10px;
+  border-radius: 8px;
+  border: 2px solid #d1d5db;
+  font-size: 15px;
+}
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 45px;
+  height: 25px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider.round {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 34px;
+  transition: 0.4s;
+}
+
+.slider.round:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+input:checked + .slider.round {
+  background-color: var(--primary);
+}
+
+input:checked + .slider.round:before {
+  transform: translateX(20px);
+}
+
+/* Calendar Placeholder Style */
+#calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  margin-top: 10px;
+  background: var(--card-light);
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px var(--shadow);
+}
+
+body.dark #calendar {
+  background: var(--card-dark);
+}
+
+#calendar div {
+  background: #ddd;
+  text-align: center;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+#calendar .done {
+  background: var(--primary);
+  color: white;
+}
