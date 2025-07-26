@@ -4,21 +4,33 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Health Predictive Analytics</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <title>HealVerse - Predictive Analytics Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Rubik:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         :root {
-            --primary: #4f46e5;
-            --primary-light: #6366f1;
-            --primary-dark: #4338ca;
-            --secondary: #10b981;
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --secondary: #14b8a6;
+            --accent: #f59e0b;
+            --dark: #1f2937;
+            --darker: #111827;
+            --light: #f9fafb;
+            --gray: #6b7280;
+            --gray-light: #e5e7eb;
+            --success: #10b981;
             --danger: #ef4444;
-            --warning: #f59e0b;
-            --light: #f8fafc;
-            --dark: #1e293b;
-            --gray: #64748b;
+            --font-primary: "Manrope", sans-serif;
+            --font-secondary: "Rubik", sans-serif;
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.1);
+            --radius: 0.625rem;
+            --radius-md: 0.875rem;
+            --radius-lg: 1.25rem;
         }
 
         * {
@@ -28,82 +40,154 @@
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f5f7fa;
+            font-family: var(--font-secondary);
             color: var(--dark);
-            line-height: 1.6;
-            padding: 0;
+            background-color: var(--light);
+            line-height: 1.7;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            padding: 2rem 0;
-            text-align: center;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        h1,
+        h2,
+        h3 {
+            font-family: var(--font-primary);
+            font-weight: 700;
+            color: var(--darker);
         }
 
         h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
+            font-size: 3rem;
+            background: linear-gradient(90deg, #2563eb, #14b8a6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            /* color: transparent; */
+            display: inline-block;
+        }
+
+        h2 {
+            font-size: 2rem;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        section {
+            padding: 6rem 0;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.75rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            z-index: -1;
+            transition: transform 0.5s ease;
+            transform: scaleX(1);
+        }
+
+        .btn:hover::before {
+            transform: scaleX(1.05);
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+            transform: translateY(-3px);
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+            padding: 4rem 0;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd' opacity='0.1'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
 
         .subtitle {
-            font-size: 1.1rem;
+            font-size: 1.25rem;
             opacity: 0.9;
+            margin-top: 1rem;
+            font-weight: 300;
+            letter-spacing: 0.5px;
         }
 
         .dashboard {
             display: grid;
             grid-template-columns: 1fr 2fr;
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        @media (max-width: 992px) {
-            .dashboard {
-                grid-template-columns: 1fr;
-            }
+            gap: 2.5rem;
+            margin-bottom: 3rem;
         }
 
         .card {
             background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: var(--radius-md);
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            transition: all 0.4s ease;
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-md);
         }
 
         .card-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--primary);
+            font-size: 1.75rem;
+            margin-bottom: 1.25rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
+            color: var(--darker);
         }
 
         .card-title i {
-            font-size: 1.2rem;
+            color: var(--primary);
+            font-size: 1.5rem;
         }
 
         form {
-            display: grid;
-            gap: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
         }
 
         .form-group {
@@ -117,58 +201,33 @@
             color: var(--dark);
         }
 
-        input {
-            padding: 0.75rem 1rem;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            font-family: inherit;
+        input,
+        select {
+            padding: 1rem;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--radius);
             font-size: 1rem;
             transition: border-color 0.3s ease;
         }
 
-        input:focus {
+        input:focus,
+        select:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
+        .time-group {
+            display: flex;
+            gap: 1rem;
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            color: white;
+        .time-group input[type="time"] {
+            flex: 2;
         }
 
-        .btn-primary:hover {
-            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn-report {
-            background: var(--secondary);
-            color: white;
-            margin-top: 1rem;
-            width: 100%;
-        }
-
-        .btn-report:hover {
-            background: #0d9f6e;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        .time-group select {
+            flex: 1;
         }
 
         .chart-container {
@@ -176,6 +235,9 @@
             height: 400px;
             width: 100%;
             margin-bottom: 2rem;
+            background: white;
+            border-radius: var(--radius);
+            padding: 1rem;
         }
 
         table {
@@ -183,88 +245,106 @@
             border-collapse: collapse;
             margin-top: 2rem;
             background: white;
-            border-radius: 8px;
+            border-radius: var(--radius-md);
             overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            box-shadow: var(--shadow);
         }
 
         th,
         td {
-            padding: 1rem;
+            padding: 1.5rem;
             text-align: left;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px solid var(--gray-light);
         }
 
         th {
-            background-color: var(--primary);
+            background: var(--primary);
             color: white;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         tr:nth-child(even) {
-            background-color: #f8fafc;
+            background: var(--gray-light);
         }
 
         tr:hover {
-            background-color: #f1f5f9;
+            background: rgba(37, 99, 235, 0.05);
         }
 
         .status {
-            display: inline-block;
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            font-size: 0.875rem;
             font-weight: 500;
-            font-size: 0.85rem;
         }
 
         .status-normal {
-            background-color: #d1fae5;
-            color: #065f46;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
         }
 
         .status-high {
-            background-color: #fee2e2;
-            color: #b91c1c;
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
         }
 
         .status-low {
-            background-color: #fef3c7;
-            color: #92400e;
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--accent);
         }
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
         }
 
         .stat-card {
             background: white;
-            border-radius: 8px;
-            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            padding: 2rem;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            box-shadow: var(--shadow);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
         }
 
         .stat-value {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: 700;
             color: var(--primary);
-            margin: 0.5rem 0;
+            margin: 0.75rem 0;
         }
 
         .stat-label {
+            font-size: 1rem;
             color: var(--gray);
-            font-size: 0.9rem;
+            font-weight: 500;
         }
 
         .trend-indicator {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.25rem;
-            font-size: 0.9rem;
+            gap: 0.5rem;
+            font-size: 0.875rem;
         }
 
         .trend-up {
@@ -272,153 +352,258 @@
         }
 
         .trend-down {
-            color: var(--secondary);
+            color: var(--success);
         }
 
         .trend-neutral {
             color: var(--gray);
         }
+
+        .error-message {
+            color: var(--danger);
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        @media (max-width: 992px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+            }
+
+            .btn {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .predictive-heading {
+            position: relative;
+            display: inline-block;
+        }
+
+        .predictive-heading::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
     </style>
 </head>
 
 <body>
-    <header>
+    <header data-aos="fade-in">
         <div class="container">
-            <h1><i class="fas fa-heartbeat"></i> Health Predictive Analytics</h1>
-            <p class="subtitle">Monitor and predict your health metrics with AI-powered analytics</p>
+            <h1><i class="fas fa-heartbeat"></i> <span class="predictive-heading">AI-Powered Health Analytics</span>
+            </h1>
+            <p class="subtitle">Monitor and predict your health metrics with advanced predictive analytics</p>
         </div>
     </header>
 
-    <div class="container">
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-label">Average BP</div>
-                <div class="stat-value" id="avg-bp">--</div>
-                <div class="trend-indicator trend-neutral">
-                    <i class="fas fa-equals"></i> <span>Stable</span>
+    <section class="dashboard-section" data-aos="fade-in">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Average BP</div>
+                    <div class="stat-value" id="avg-bp">--</div>
+                    <div class="trend-indicator trend-neutral">
+                        <i class="fas fa-equals"></i> <span>No data</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Average Heart Rate</div>
+                    <div class="stat-value" id="avg-hr">--</div>
+                    <div class="trend-indicator trend-neutral">
+                        <i class="fas fa-equals"></i> <span>No data</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Average Sugar</div>
+                    <div class="stat-value" id="avg-sugar">--</div>
+                    <div class="trend-indicator trend-neutral">
+                        <i class="fas fa-equals"></i> <span>No data</span>
+                    </div>
                 </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-label">Average Heart Rate</div>
-                <div class="stat-value" id="avg-hr">--</div>
-                <div class="trend-indicator trend-neutral">
-                    <i class="fas fa-equals"></i> <span>Stable</span>
+
+            <div class="dashboard">
+                <div class="card" data-aos="slide-in-left">
+                    <h2 class="card-title"><i class="fas fa-edit"></i> New Entry</h2>
+                    <form id="healthForm">
+                        <div class="form-group">
+                            <label for="date">Date</label>
+                            <input type="date" id="date" required aria-label="Date" />
+                        </div>
+                        <div class="form-group">
+                            <label for="time">Time</label>
+                            <div class="time-group">
+                                <input type="time" id="time" required aria-label="Time" />
+                                <select id="period" required aria-label="AM/PM">
+                                    <option value="AM">AM</option>
+                                    <option value="PM">PM</option>
+                                </select>
+                            </div>
+                            <div class="error-message" id="time-error">Please enter a valid time.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="bp">Blood Pressure (mmHg)</label>
+                            <input type="number" id="bp" placeholder="e.g. 120" required min="50" max="250"
+                                aria-label="Blood Pressure" />
+                            <div class="error-message" id="bp-error">Please enter a value between 50 and 250.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="hr">Heart Rate (bpm)</label>
+                            <input type="number" id="hr" placeholder="e.g. 72" required min="30" max="200"
+                                aria-label="Heart Rate" />
+                            <div class="error-message" id="hr-error">Please enter a value between 30 and 200.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="sugar">Sugar Level (mg/dL)</label>
+                            <input type="number" id="sugar" placeholder="e.g. 100" required min="20" max="400"
+                                aria-label="Sugar Level" />
+                            <div class="error-message" id="sugar-error">Please enter a value between 20 and 400.</div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus-circle"></i> Add Entry
+                        </button>
+                    </form>
+                </div>
+
+                <div class="card" data-aos="slide-in-right">
+                    <h2 class="card-title"><i class="fas fa-chart-line"></i> Health Trends</h2>
+                    <div class="chart-container">
+                        <canvas id="healthChart"></canvas>
+                    </div>
                 </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-label">Average Sugar</div>
-                <div class="stat-value" id="avg-sugar">--</div>
-                <div class="trend-indicator trend-neutral">
-                    <i class="fas fa-equals"></i> <span>Stable</span>
-                </div>
+
+            <div class="card" data-aos="fade-in">
+                <h2 class="card-title"><i class="fas fa-table"></i> Health Records</h2>
+                <table id="reportTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>BP (mmHg)</th>
+                            <th>Heart Rate (bpm)</th>
+                            <th>Sugar (mg/dL)</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 2rem;">
+                                No health entries found. Add your first entry above.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button onclick="generatePDF()" class="btn btn-primary" style="margin-top: 1.5rem; width: 100%;">
+                    <i class="fas fa-file-pdf"></i> Download Full Report
+                </button>
             </div>
         </div>
+    </section>
 
-        <div class="dashboard">
-            <div class="card">
-                <h2 class="card-title"><i class="fas fa-edit"></i> New Entry</h2>
-                <form id="healthForm">
-                    <div class="form-group">
-                        <label for="date">Date</label>
-                        <input type="date" id="date" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="bp">Blood Pressure (mmHg)</label>
-                        <input type="number" id="bp" placeholder="e.g. 120" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="hr">Heart Rate (bpm)</label>
-                        <input type="number" id="hr" placeholder="e.g. 72" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="sugar">Sugar Level (mg/dL)</label>
-                        <input type="number" id="sugar" placeholder="e.g. 100" required />
-                    </div>
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-plus-circle"></i> Add Entry
-                    </button>
-                </form>
-            </div>
-
-            <div class="card">
-                <h2 class="card-title"><i class="fas fa-chart-line"></i> Health Trends</h2>
-                <div class="chart-container">
-                    <canvas id="healthChart"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2 class="card-title"><i class="fas fa-table"></i> Health Records</h2>
-            <table id="reportTable">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>BP (mmHg)</th>
-                        <th>Heart Rate (bpm)</th>
-                        <th>Sugar (mg/dL)</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-            <button onclick="generatePDF()" class="btn btn-report">
-                <i class="fas fa-file-pdf"></i> Download Full Report
-            </button>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Initialize Chart
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // Initialize Chart with empty data
         const ctx = document.getElementById('healthChart').getContext('2d');
-        let entries = JSON.parse(localStorage.getItem('healthEntries')) || [];
+        let entries = [];
 
-        // Register plugins
+        // Clear any existing data
+        localStorage.removeItem('healthEntries');
+
         Chart.register(ChartDataLabels);
-
         const chart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: entries.map(e => e.date),
+                labels: [],
                 datasets: [
                     {
                         label: 'Blood Pressure',
-                        data: entries.map(e => e.bp),
-                        borderColor: '#4f46e5',
-                        backgroundColor: 'rgba(79, 70, 229, 0.1)',
-                        borderWidth: 2,
-                        tension: 0.3,
+                        data: [],
+                        borderColor: 'var(--primary)',
+                        backgroundColor: 'rgba(37, 99, 235, 0.2)',
+                        borderWidth: 3,
+                        tension: 0.4,
                         fill: true,
-                        pointBackgroundColor: '#4f46e5',
+                        pointBackgroundColor: 'var(--primary)',
                         pointRadius: 5,
-                        pointHoverRadius: 7
+                        pointHoverRadius: 8,
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        cubicInterpolationMode: 'monotone'
                     },
                     {
                         label: 'Heart Rate',
-                        data: entries.map(e => e.hr),
-                        borderColor: '#10b981',
-                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                        borderWidth: 2,
-                        tension: 0.3,
+                        data: [],
+                        borderColor: 'var(--success)',
+                        backgroundColor: 'rgba(16, 185, 129, 0.2)',
+                        borderWidth: 3,
+                        tension: 0.4,
                         fill: true,
-                        pointBackgroundColor: '#10b981',
+                        pointBackgroundColor: 'var(--success)',
                         pointRadius: 5,
-                        pointHoverRadius: 7
+                        pointHoverRadius: 8,
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        cubicInterpolationMode: 'monotone'
                     },
                     {
                         label: 'Sugar Level',
-                        data: entries.map(e => e.sugar),
-                        borderColor: '#f59e0b',
-                        backgroundColor: 'rgba(245, 158, 11, 0.1)',
-                        borderWidth: 2,
-                        tension: 0.3,
+                        data: [],
+                        borderColor: 'var(--accent)',
+                        backgroundColor: 'rgba(245, 158, 11, 0.2)',
+                        borderWidth: 3,
+                        tension: 0.4,
                         fill: true,
-                        pointBackgroundColor: '#f59e0b',
+                        pointBackgroundColor: 'var(--accent)',
                         pointRadius: 5,
-                        pointHoverRadius: 7
+                        pointHoverRadius: 8,
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        cubicInterpolationMode: 'monotone'
                     }
                 ]
             },
@@ -430,8 +615,9 @@
                         position: 'top',
                         labels: {
                             font: {
-                                family: 'Poppins',
-                                size: 14
+                                family: 'Rubik',
+                                size: 14,
+                                weight: 'bold'
                             },
                             padding: 20,
                             usePointStyle: true,
@@ -439,21 +625,40 @@
                         }
                     },
                     tooltip: {
-                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        backgroundColor: 'rgba(0, 0, 0, 0.9)',
                         titleFont: {
-                            family: 'Poppins',
+                            family: 'Rubik',
                             size: 14,
                             weight: 'bold'
                         },
                         bodyFont: {
-                            family: 'Poppins',
+                            family: 'Rubik',
                             size: 12
                         },
                         padding: 12,
                         cornerRadius: 8,
                         displayColors: true,
                         mode: 'index',
-                        intersect: false
+                        intersect: false,
+                        callbacks: {
+                            label: function (context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += context.parsed.y;
+                                    if (context.dataset.label === 'Blood Pressure') {
+                                        label += ' mmHg';
+                                    } else if (context.dataset.label === 'Heart Rate') {
+                                        label += ' bpm';
+                                    } else if (context.dataset.label === 'Sugar Level') {
+                                        label += ' mg/dL';
+                                    }
+                                }
+                                return label;
+                            }
+                        }
                     },
                     datalabels: {
                         display: false
@@ -463,15 +668,21 @@
                     x: {
                         title: {
                             display: true,
-                            text: 'Date',
+                            text: 'Date and Time',
                             font: {
-                                family: 'Poppins',
+                                family: 'Manrope',
                                 size: 14,
                                 weight: 'bold'
-                            }
+                            },
+                            color: 'var(--dark)'
                         },
                         grid: {
-                            display: false
+                            display: false,
+                            drawBorder: true,
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        },
+                        ticks: {
+                            color: 'var(--gray)'
                         }
                     },
                     y: {
@@ -479,40 +690,95 @@
                             display: true,
                             text: 'Value',
                             font: {
-                                family: 'Poppins',
+                                family: 'Manrope',
                                 size: 14,
                                 weight: 'bold'
-                            }
+                            },
+                            color: 'var(--dark)'
                         },
                         grid: {
-                            color: 'rgba(0, 0, 0, 0.05)'
-                        }
+                            color: 'rgba(0, 0, 0, 0.05)',
+                            drawBorder: true
+                        },
+                        ticks: {
+                            color: 'var(--gray)'
+                        },
+                        beginAtZero: false
                     }
                 },
                 interaction: {
                     mode: 'nearest',
                     axis: 'x',
                     intersect: false
+                },
+                animation: {
+                    duration: 1500,
+                    easing: 'easeInOutQuart'
+                },
+                elements: {
+                    line: {
+                        borderJoinStyle: 'round'
+                    }
                 }
             }
         });
 
-        // Form submission
+        // Set default date/time to current
+        document.getElementById('date').valueAsDate = new Date();
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        document.getElementById('time').value = `${hours}:${minutes}`;
+        document.getElementById('period').value = now.getHours() >= 12 ? 'PM' : 'AM';
+
+        // Form submission with validation
         document.getElementById('healthForm').addEventListener('submit', (e) => {
             e.preventDefault();
+
+            // Reset error messages
+            document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
+
             const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+            const period = document.getElementById('period').value;
             const bp = +document.getElementById('bp').value;
             const hr = +document.getElementById('hr').value;
             const sugar = +document.getElementById('sugar').value;
-            const status = getHealthStatus(bp, hr, sugar);
 
-            entries.push({ date, bp, hr, sugar, status });
+            // Validation
+            let isValid = true;
+            if (!date || !time || !period) {
+                document.getElementById('time-error').style.display = 'block';
+                isValid = false;
+            }
+            if (isNaN(bp) || bp < 50 || bp > 250) {
+                document.getElementById('bp-error').style.display = 'block';
+                isValid = false;
+            }
+            if (isNaN(hr) || hr < 30 || hr > 200) {
+                document.getElementById('hr-error').style.display = 'block';
+                isValid = false;
+            }
+            if (isNaN(sugar) || sugar < 20 || sugar > 400) {
+                document.getElementById('sugar-error').style.display = 'block';
+                isValid = false;
+            }
+
+            if (!isValid) return;
+
+            const status = getHealthStatus(bp, hr, sugar);
+            entries.push({ date, time, period, bp, hr, sugar, status });
+
             localStorage.setItem('healthEntries', JSON.stringify(entries));
 
             updateChart();
             updateTable();
             updateStats();
-            e.target.reset();
+
+            // Reset form inputs (except date/time)
+            document.getElementById('bp').value = '';
+            document.getElementById('hr').value = '';
+            document.getElementById('sugar').value = '';
         });
 
         function getHealthStatus(bp, hr, sugar) {
@@ -522,10 +788,20 @@
         }
 
         function updateChart() {
-            chart.data.labels = entries.map(e => e.date);
-            chart.data.datasets[0].data = entries.map(e => e.bp);
-            chart.data.datasets[1].data = entries.map(e => e.hr);
-            chart.data.datasets[2].data = entries.map(e => e.sugar);
+            const validEntries = entries.filter(entry =>
+                entry &&
+                entry.date &&
+                entry.time &&
+                entry.period &&
+                !isNaN(entry.bp) &&
+                !isNaN(entry.hr) &&
+                !isNaN(entry.sugar)
+            );
+
+            chart.data.labels = validEntries.map(e => `${e.date} ${e.time} ${e.period}`);
+            chart.data.datasets[0].data = validEntries.map(e => e.bp);
+            chart.data.datasets[1].data = validEntries.map(e => e.hr);
+            chart.data.datasets[2].data = validEntries.map(e => e.sugar);
             chart.update();
         }
 
@@ -533,11 +809,33 @@
             const tbody = document.querySelector('#reportTable tbody');
             tbody.innerHTML = '';
 
-            entries.slice().reverse().forEach(entry => {
+            const validEntries = entries.filter(entry =>
+                entry &&
+                entry.date &&
+                entry.time &&
+                entry.period &&
+                !isNaN(entry.bp) &&
+                !isNaN(entry.hr) &&
+                !isNaN(entry.sugar)
+            );
+
+            if (validEntries.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 2rem;">
+                            No health entries found. Add your first entry above.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            validEntries.slice().reverse().forEach(entry => {
                 const status = getHealthStatus(entry.bp, entry.hr, entry.sugar);
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${entry.date}</td>
+                    <td>${entry.time} ${entry.period}</td>
                     <td>${entry.bp}</td>
                     <td>${entry.hr}</td>
                     <td>${entry.sugar}</td>
@@ -548,27 +846,60 @@
         }
 
         function updateStats() {
-            if (entries.length === 0) return;
+            const validEntries = entries.filter(entry =>
+                entry &&
+                entry.date &&
+                entry.time &&
+                entry.period &&
+                !isNaN(entry.bp) &&
+                !isNaN(entry.hr) &&
+                !isNaN(entry.sugar)
+            );
 
-            // Calculate averages
-            const avgBp = Math.round(entries.reduce((sum, e) => sum + e.bp, 0) / entries.length);
-            const avgHr = Math.round(entries.reduce((sum, e) => sum + e.hr, 0) / entries.length);
-            const avgSugar = Math.round(entries.reduce((sum, e) => sum + e.sugar, 0) / entries.length);
+            if (validEntries.length === 0) {
+                document.getElementById('avg-bp').textContent = '--';
+                document.getElementById('avg-hr').textContent = '--';
+                document.getElementById('avg-sugar').textContent = '--';
 
-            document.getElementById('avg-bp').textContent = avgBp;
-            document.getElementById('avg-hr').textContent = avgHr;
-            document.getElementById('avg-sugar').textContent = avgSugar;
+                document.querySelectorAll('.trend-indicator').forEach(el => {
+                    el.className = 'trend-indicator trend-neutral';
+                    el.innerHTML = '<i class="fas fa-equals"></i> <span>No data</span>';
+                });
+                return;
+            }
 
-            // Update trends (simplified example)
+            const avgBp = Math.round(validEntries.reduce((sum, e) => sum + e.bp, 0) / validEntries.length);
+            const avgHr = Math.round(validEntries.reduce((sum, e) => sum + e.hr, 0) / validEntries.length);
+            const avgSugar = Math.round(validEntries.reduce((sum, e) => sum + e.sugar, 0) / validEntries.length);
+
+            document.getElementById('avg-bp').textContent = `${avgBp} mmHg`;
+            document.getElementById('avg-hr').textContent = `${avgHr} bpm`;
+            document.getElementById('avg-sugar').textContent = `${avgSugar} mg/dL`;
+
             updateTrendIndicator('bp', avgBp);
             updateTrendIndicator('hr', avgHr);
             updateTrendIndicator('sugar', avgSugar);
         }
 
         function updateTrendIndicator(metric, currentValue) {
-            if (entries.length < 2) return;
+            const validEntries = entries.filter(entry =>
+                entry &&
+                entry.date &&
+                entry.time &&
+                entry.period &&
+                !isNaN(entry.bp) &&
+                !isNaN(entry.hr) &&
+                !isNaN(entry.sugar)
+            );
 
-            const prevValue = entries[entries.length - 2][metric];
+            if (validEntries.length < 2) {
+                const indicator = document.querySelector(`#avg-${metric}`).nextElementSibling;
+                indicator.className = 'trend-indicator trend-neutral';
+                indicator.innerHTML = '<i class="fas fa-equals"></i> <span>No trend</span>';
+                return;
+            }
+
+            const prevValue = validEntries[validEntries.length - 2][metric];
             const indicator = document.querySelector(`#avg-${metric}`).nextElementSibling;
 
             if (currentValue > prevValue) {
@@ -591,28 +922,37 @@
                 format: 'a4'
             });
 
-            // Title
-            doc.setFont('helvetica', 'bold');
+            // Header
+            doc.setFont('Manrope', 'bold');
             doc.setFontSize(22);
-            doc.setTextColor(79, 70, 229);
+            doc.setTextColor(37, 99, 235);
             doc.text('Health Analytics Report', 105, 20, { align: 'center' });
 
-            // Date
-            doc.setFont('helvetica', 'normal');
+            doc.setFont('Rubik', 'normal');
             doc.setFontSize(12);
-            doc.setTextColor(100, 100, 100);
+            doc.setTextColor(107, 114, 128);
             doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 105, 28, { align: 'center' });
 
-            // Summary Stats
-            doc.setFontSize(14);
+            // Summary Statistics
+            doc.setFontSize(16);
             doc.setTextColor(0, 0, 0);
             doc.text('Summary Statistics', 20, 40);
 
             doc.setFontSize(12);
-            if (entries.length > 0) {
-                const avgBp = Math.round(entries.reduce((sum, e) => sum + e.bp, 0) / entries.length);
-                const avgHr = Math.round(entries.reduce((sum, e) => sum + e.hr, 0) / entries.length);
-                const avgSugar = Math.round(entries.reduce((sum, e) => sum + e.sugar, 0) / entries.length);
+            const validEntries = entries.filter(entry =>
+                entry &&
+                entry.date &&
+                entry.time &&
+                entry.period &&
+                !isNaN(entry.bp) &&
+                !isNaN(entry.hr) &&
+                !isNaN(entry.sugar)
+            );
+
+            if (validEntries.length > 0) {
+                const avgBp = Math.round(validEntries.reduce((sum, e) => sum + e.bp, 0) / validEntries.length);
+                const avgHr = Math.round(validEntries.reduce((sum, e) => sum + e.hr, 0) / validEntries.length);
+                const avgSugar = Math.round(validEntries.reduce((sum, e) => sum + e.sugar, 0) / validEntries.length);
 
                 doc.text(`Average Blood Pressure: ${avgBp} mmHg`, 20, 50);
                 doc.text(`Average Heart Rate: ${avgHr} bpm`, 20, 57);
@@ -621,65 +961,75 @@
                 doc.text('No data available for summary statistics', 20, 50);
             }
 
-            // Add line chart
-            if (entries.length > 0) {
-                doc.setFontSize(14);
+            if (validEntries.length > 0) {
+                // Health Trends Chart
+                doc.setFontSize(16);
                 doc.text('Health Trends Over Time', 20, 80);
 
-                // Create a temporary canvas for the chart
                 const tempCanvas = document.createElement('canvas');
                 tempCanvas.width = 800;
                 tempCanvas.height = 400;
                 const tempCtx = tempCanvas.getContext('2d');
 
-                // Clone the chart with simplified options for PDF
                 const tempChart = new Chart(tempCtx, {
                     type: 'line',
                     data: chart.data,
                     options: {
                         responsive: false,
+                        maintainAspectRatio: false,
                         plugins: {
                             legend: {
-                                position: 'top'
-                            },
-                            title: {
-                                display: false
+                                position: 'top',
+                                labels: {
+                                    font: {
+                                        family: 'Rubik',
+                                        size: 14,
+                                        weight: 'bold'
+                                    }
+                                }
                             }
                         },
                         scales: {
                             x: {
                                 title: {
                                     display: true,
-                                    text: 'Date'
+                                    text: 'Date and Time',
+                                    font: {
+                                        family: 'Manrope',
+                                        size: 14,
+                                        weight: 'bold'
+                                    }
                                 }
                             },
                             y: {
                                 title: {
                                     display: true,
-                                    text: 'Value'
+                                    text: 'Value',
+                                    font: {
+                                        family: 'Manrope',
+                                        size: 14,
+                                        weight: 'bold'
+                                    }
                                 }
                             }
                         }
                     }
                 });
 
-                // Add the chart image to PDF
-                await new Promise(resolve => setTimeout(resolve, 500)); // Wait for chart to render
+                await new Promise(resolve => setTimeout(resolve, 500));
                 const chartImg = tempCanvas.toDataURL('image/png');
                 doc.addImage(chartImg, 'PNG', 20, 85, 170, 80);
 
-                // Add pie charts for status distribution
-                doc.setFontSize(14);
+                // Status Distribution
+                doc.setFontSize(16);
                 doc.text('Health Status Distribution', 20, 180);
 
-                // Status counts
                 const statusCounts = {
-                    normal: entries.filter(e => getHealthStatus(e.bp, e.hr, e.sugar).text === 'Normal').length,
-                    high: entries.filter(e => getHealthStatus(e.bp, e.hr, e.sugar).text === 'High').length,
-                    low: entries.filter(e => getHealthStatus(e.bp, e.hr, e.sugar).text === 'Low').length
+                    normal: validEntries.filter(e => getHealthStatus(e.bp, e.hr, e.sugar).text === 'Normal').length,
+                    high: validEntries.filter(e => getHealthStatus(e.bp, e.hr, e.sugar).text === 'High').length,
+                    low: validEntries.filter(e => getHealthStatus(e.bp, e.hr, e.sugar).text === 'Low').length
                 };
 
-                // Create pie chart
                 const pieCanvas = document.createElement('canvas');
                 pieCanvas.width = 400;
                 pieCanvas.height = 400;
@@ -692,27 +1042,38 @@
                         datasets: [{
                             data: [statusCounts.normal, statusCounts.high, statusCounts.low],
                             backgroundColor: [
-                                '#d1fae5',
-                                '#fee2e2',
-                                '#fef3c7'
+                                'rgba(16, 185, 129, 0.7)',
+                                'rgba(239, 68, 68, 0.7)',
+                                'rgba(245, 158, 11, 0.7)'
                             ],
                             borderColor: [
-                                '#065f46',
-                                '#b91c1c',
-                                '#92400e'
+                                'var(--success)',
+                                'var(--danger)',
+                                'var(--accent)'
                             ],
-                            borderWidth: 1
+                            borderWidth: 2
                         }]
                     },
                     options: {
                         responsive: false,
                         plugins: {
                             legend: {
-                                position: 'right'
+                                position: 'right',
+                                labels: {
+                                    font: {
+                                        family: 'Rubik',
+                                        size: 12
+                                    }
+                                }
                             },
                             title: {
                                 display: true,
-                                text: 'Status Distribution'
+                                text: 'Status Distribution',
+                                font: {
+                                    family: 'Manrope',
+                                    size: 14,
+                                    weight: 'bold'
+                                }
                             }
                         }
                     }
@@ -721,60 +1082,69 @@
                 await new Promise(resolve => setTimeout(resolve, 500));
                 const pieImg = pieCanvas.toDataURL('image/png');
                 doc.addImage(pieImg, 'PNG', 20, 185, 80, 60);
+
+                // Status counts text
+                doc.setFontSize(12);
+                doc.text(`Normal Readings: ${statusCounts.normal} (${Math.round(statusCounts.normal / validEntries.length * 100)}%)`, 110, 190);
+                doc.text(`High Readings: ${statusCounts.high} (${Math.round(statusCounts.high / validEntries.length * 100)}%)`, 110, 200);
+                doc.text(`Low Readings: ${statusCounts.low} (${Math.round(statusCounts.low / validEntries.length * 100)}%)`, 110, 210);
             }
 
-            // Add data table
-            doc.setFontSize(14);
-            doc.text('Detailed Health Records', 20, entries.length > 0 ? 260 : 100);
+            // Detailed Records
+            doc.setFontSize(16);
+            doc.text('Detailed Health Records', 20, validEntries.length > 0 ? 260 : 100);
 
-            if (entries.length > 0) {
-                // Table headers
+            if (validEntries.length > 0) {
+                // Table header
                 doc.setFontSize(12);
                 doc.setTextColor(255, 255, 255);
-                doc.setFillColor(79, 70, 229);
+                doc.setFillColor(37, 99, 235);
                 doc.rect(20, 265, 170, 8, 'F');
                 doc.text('Date', 25, 270);
-                doc.text('BP', 60, 270);
-                doc.text('HR', 90, 270);
-                doc.text('Sugar', 120, 270);
-                doc.text('Status', 150, 270);
+                doc.text('Time', 50, 270);
+                doc.text('BP', 80, 270);
+                doc.text('HR', 105, 270);
+                doc.text('Sugar', 130, 270);
+                doc.text('Status', 155, 270);
 
                 // Table rows
                 doc.setTextColor(0, 0, 0);
                 let y = 275;
-                entries.slice().reverse().forEach((entry, index) => {
+                validEntries.slice().reverse().forEach((entry, index) => {
                     if (index > 0 && index % 25 === 0) {
                         doc.addPage();
                         y = 20;
-                        // Repeat header on new page
-                        doc.setFillColor(79, 70, 229);
+                        // Header on new page
+                        doc.setFillColor(37, 99, 235);
                         doc.rect(20, y, 170, 8, 'F');
                         doc.setTextColor(255, 255, 255);
                         doc.text('Date', 25, y + 5);
-                        doc.text('BP', 60, y + 5);
-                        doc.text('HR', 90, y + 5);
-                        doc.text('Sugar', 120, y + 5);
-                        doc.text('Status', 150, y + 5);
+                        doc.text('Time', 50, y + 5);
+                        doc.text('BP', 80, y + 5);
+                        doc.text('HR', 105, y + 5);
+                        doc.text('Sugar', 130, y + 5);
+                        doc.text('Status', 155, y + 5);
                         y += 10;
                         doc.setTextColor(0, 0, 0);
                     }
 
                     const status = getHealthStatus(entry.bp, entry.hr, entry.sugar);
                     doc.text(entry.date, 25, y);
-                    doc.text(entry.bp.toString(), 60, y);
-                    doc.text(entry.hr.toString(), 90, y);
-                    doc.text(entry.sugar.toString(), 120, y);
+                    doc.text(`${entry.time} ${entry.period}`, 50, y);
+                    doc.text(entry.bp.toString(), 80, y);
+                    doc.text(entry.hr.toString(), 105, y);
+                    doc.text(entry.sugar.toString(), 130, y);
 
-                    // Color status based on value
+                    // Color code status
                     if (status.text === 'High') {
-                        doc.setTextColor(185, 28, 28);
+                        doc.setTextColor(239, 68, 68);
                     } else if (status.text === 'Low') {
-                        doc.setTextColor(180, 83, 9);
+                        doc.setTextColor(245, 158, 11);
                     } else {
-                        doc.setTextColor(6, 95, 70);
+                        doc.setTextColor(16, 185, 129);
                     }
 
-                    doc.text(status.text, 150, y);
+                    doc.text(status.text, 155, y);
                     doc.setTextColor(0, 0, 0);
                     y += 7;
                 });
@@ -785,13 +1155,14 @@
 
             // Footer
             doc.setFontSize(10);
-            doc.setTextColor(100, 100, 100);
-            doc.text('Generated by Health Predictive Analytics Dashboard', 105, 290, { align: 'center' });
+            doc.setTextColor(107, 114, 128);
+            doc.text('Generated by AI-Powered Health Analytics Dashboard', 105, 290, { align: 'center' });
 
+            // Save the PDF
             doc.save('Health_Report.pdf');
         }
 
-        // Initialize
+        // Initialize with empty data
         updateTable();
         updateStats();
     </script>
