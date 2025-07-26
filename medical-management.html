@@ -2,79 +2,1281 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Medication Manager</title>
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
-    <link rel="stylesheet" href="style/medical-management.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medication Manager | HealVerse</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Rubik:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --secondary: #14b8a6;
+            --accent: #f59e0b;
+            --dark: #1f2937;
+            --darker: #111827;
+            --light: #f9fafb;
+            --gray: #6b7280;
+            --gray-light: #e5e7eb;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f97316;
+
+            --font-primary: "Manrope", sans-serif;
+            --font-secondary: "Rubik", sans-serif;
+
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.15);
+
+            --radius-sm: 0.375rem;
+            --radius: 0.625rem;
+            --radius-md: 0.875rem;
+            --radius-lg: 1.25rem;
+            --radius-full: 9999px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            color: var(--dark);
+            background-color: var(--light);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Header */
+        .navbar {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .logo-icon {
+            font-size: 1.5em;
+        }
+
+        /* Main Content */
+        .medication-manager {
+            padding: 3rem 0;
+        }
+
+        .section-header {
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2.25rem;
+            color: var(--darker);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            color: var(--darker);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        /* Form Styles */
+        .med-form {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 1rem 1rem 1rem 2.5rem;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.75rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+            transform: translateY(-3px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            box-shadow: inset 0 0 0 2px var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: white;
+        }
+
+        /* Medication List */
+        .medication-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .med-item {
+            padding: 1.5rem;
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary);
+        }
+
+        .med-item:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .med-details {
+            flex: 1;
+        }
+
+        .med-name {
+            font-weight: 600;
+            color: var(--darker);
+            margin-bottom: 0.25rem;
+        }
+
+        .med-meta {
+            display: flex;
+            gap: 1.5rem;
+            color: var(--gray);
+            font-size: 0.875rem;
+        }
+
+        .med-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .med-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        /* Today's Schedule */
+        .schedule-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .schedule-item {
+            padding: 1.5rem;
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            display: grid;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .schedule-item.taken {
+            border-left: 4px solid var(--success);
+        }
+
+        .schedule-item.missed {
+            border-left: 4px solid var(--danger);
+        }
+
+        .schedule-item.upcoming {
+            border-left: 4px solid var(--accent);
+        }
+
+        .schedule-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .schedule-time {
+            font-weight: 600;
+            color: var(--darker);
+        }
+
+        .schedule-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-taken {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .status-missed {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+
+        .status-upcoming {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--accent);
+        }
+
+        .schedule-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Empty States */
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: var(--gray);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            color: var(--gray-light);
+            margin-bottom: 1rem;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .med-item {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .med-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        /* Alert Styles */
+        .alert {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1000;
+            transform: translateX(120%);
+            transition: transform 0.3s ease;
+        }
+
+        .alert.show {
+            transform: translateX(0);
+        }
+
+        .alert-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .alert-error {
+            background: var(--danger);
+            color: white;
+        }
+
+        .alert-warning {
+            background: var(--warning);
+            color: white;
+        }
+
+        .alert-info {
+            background: var(--primary);
+            color: white;
+        }
+
+        .alert-close {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.25rem;
+        }
+
+        /* Dialog Styles */
+        .dialog-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .dialog-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .dialog {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .dialog-overlay.active .dialog {
+            transform: translateY(0);
+        }
+
+        .dialog-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--darker);
+        }
+
+        .dialog-message {
+            margin-bottom: 2rem;
+            color: var(--gray);
+        }
+
+        .dialog-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="container">
-        <header class="app-header">
-            <div class="header-content">
-                <h1><i class="fas fa-pills"></i> MedTrack Pro</h1>
-                <p class="tagline">Your personal medication companion</p>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <span class="logo-icon">⚕</span>
+                <span>HealVerse</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Medication Manager -->
+    <main class="medication-manager">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Medication Manager</h2>
+                <p class="section-subtitle">Track and manage your medications with AI-powered insights</p>
             </div>
-        </header>
 
-        <main class="dashboard">
-            <section class="add-medication card">
-                <h2><i class="fas fa-plus-circle"></i> Add New Medication</h2>
-                <form id="medForm" class="med-form">
-                    <div class="form-group">
-                        <i class="fas fa-capsules"></i>
-                        <input type="text" id="medName" placeholder="Medication Name" required>
+            <div class="dashboard-grid">
+                <!-- Add Medication Card -->
+                <div class="card fade-in" style="grid-column: span 4;">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-plus-circle"></i> Add Medication</h3>
                     </div>
-                    <div class="form-group">
-                        <i class="fas fa-prescription-bottle-alt"></i>
-                        <input type="text" id="medDose" placeholder="Dosage (e.g. 500mg)" required>
-                    </div>
-                    <div class="form-row">
+                    <form id="medForm" class="med-form">
                         <div class="form-group">
-                            <i class="far fa-calendar-alt"></i>
-                            <input type="date" id="medDate" required>
+                            <i class="fas fa-pills"></i>
+                            <input type="text" id="medName" placeholder="Medication Name" required>
                         </div>
                         <div class="form-group">
-                            <i class="far fa-clock"></i>
-                            <input type="time" id="medTime" required>
+                            <i class="fas fa-prescription-bottle-alt"></i>
+                            <input type="text" id="medDose" placeholder="Dosage (e.g. 500mg)" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <i class="far fa-calendar-alt"></i>
+                                <input type="date" id="medDate" required>
+                            </div>
+                            <div class="form-group">
+                                <i class="far fa-clock"></i>
+                                <input type="time" id="medTime" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <i class="fas fa-syringe"></i>
+                            <select id="medType">
+                                <option value="">Select Medication Type</option>
+                                <option value="tablet">Tablet</option>
+                                <option value="capsule">Capsule</option>
+                                <option value="liquid">Liquid</option>
+                                <option value="injection">Injection</option>
+                                <option value="inhaler">Inhaler</option>
+                                <option value="topical">Topical</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Add Medication
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Today's Schedule Card -->
+                <div class="card fade-in" style="grid-column: span 4;">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-calendar-day"></i> Today's Schedule</h3>
+                    </div>
+                    <div id="todaySchedule" class="schedule-list">
+                        <!-- Dynamic content will be inserted here -->
+                        <div class="empty-state">
+                            <i class="fas fa-smile-beam"></i>
+                            <h3>No Medications Today</h3>
+                            <p>Enjoy your day medication-free!</p>
                         </div>
                     </div>
-                    <button type="submit" class="primary-btn">
-                        <i class="fas fa-save"></i> Add Medication
-                    </button>
-                </form>
-            </section>
+                </div>
 
-            <section class="todays-schedule card">
-                <h2><i class="fas fa-calendar-day"></i> Today's Schedule</h2>
-                <div id="todaySchedule" class="schedule-list"></div>
-            </section>
+                <!-- Medication Inventory Card -->
+                <div class="card fade-in" style="grid-column: span 4;">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-list-ul"></i> Medication Inventory</h3>
+                    </div>
+                    <div id="medList" class="medication-list">
+                        <!-- Dynamic content will be inserted here -->
+                        <div class="empty-state">
+                            <i class="fas fa-pills"></i>
+                            <h3>No Medications Added</h3>
+                            <p>Add your first medication to get started</p>
+                        </div>
+                    </div>
+                </div>
 
-            <section class="all-medications card">
-                <h2><i class="fas fa-list-ul"></i> Medication Inventory</h2>
-                <div id="medList" class="medication-list"></div>
-            </section>
+                <!-- Adherence Analytics Card -->
+                <div class="card fade-in" style="grid-column: span 8;">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-chart-line"></i> Adherence Analytics</h3>
+                        <button id="downloadReport" class="btn btn-secondary">
+                            <i class="fas fa-file-pdf"></i> Export Report
+                        </button>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="adherenceChart"></canvas>
+                    </div>
+                </div>
 
-            <section class="analytics card">
-                <h2><i class="fas fa-chart-line"></i> Adherence Analytics</h2>
-                <canvas id="adherenceChart"></canvas>
-                <button id="downloadReport" class="secondary-btn">
-                    <i class="fas fa-file-pdf"></i> Export Health Report
-                </button>
-            </section>
-        </main>
+                <!-- Medication Interactions Card -->
+                <div class="card fade-in" style="grid-column: span 4;">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-exclamation-triangle"></i> Potential Interactions</h3>
+                    </div>
+                    <div id="interactionsList" class="medication-list">
+                        <div class="empty-state">
+                            <i class="fas fa-check-circle"></i>
+                            <h3>No Interactions Found</h3>
+                            <p>Your current medications are safe to take together</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
-        <footer class="app-footer">
-            <p>© 2023 MedTrack Pro. Keeping you healthy, one dose at a time.</p>
-        </footer>
-    </div>
+    <!-- Alert Container -->
+    <div id="alertContainer"></div>
 
+    <!-- Dialog Container -->
+    <div id="dialogContainer"></div>
+
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="js/medical-management.js"></script>
+    <script>
+        // DOM Elements
+        const medForm = document.getElementById("medForm");
+        const medList = document.getElementById("medList");
+        const todaySchedule = document.getElementById("todaySchedule");
+        const interactionsList = document.getElementById("interactionsList");
+        const downloadBtn = document.getElementById("downloadReport");
+        const alertContainer = document.getElementById("alertContainer");
+
+        // Initialize with localStorage data or empty arrays
+        let medications = JSON.parse(localStorage.getItem("medications")) || [];
+        let takenLog = JSON.parse(localStorage.getItem("takenLog")) || {};
+
+        // Initial render
+        renderAll();
+
+        // Form Submission
+        medForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById("medName").value.trim();
+            const dose = document.getElementById("medDose").value.trim();
+            const date = document.getElementById("medDate").value;
+            const time = document.getElementById("medTime").value;
+            const type = document.getElementById("medType").value;
+
+            if (!name || !dose || !date || !time) {
+                showAlert("Please fill all required fields!", "error");
+                return;
+            }
+
+            const med = {
+                id: Date.now(),
+                name,
+                dose,
+                date,
+                time,
+                type,
+                added: new Date().toISOString()
+            };
+
+            medications.push(med);
+            saveMedications();
+            renderAll();
+            medForm.reset();
+
+            showAlert(`${name} added successfully!`, "success");
+            checkInteractions(name);
+        });
+
+        // Save to localStorage
+        function saveMedications() {
+            localStorage.setItem("medications", JSON.stringify(medications));
+            localStorage.setItem("takenLog", JSON.stringify(takenLog));
+        }
+
+        // Render all components
+        function renderAll() {
+            renderMedicationList();
+            renderTodaySchedule();
+            renderChart();
+            checkAllInteractions();
+        }
+
+        // Render medication list
+        function renderMedicationList() {
+            if (medications.length === 0) {
+                medList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-pills"></i>
+                        <h3>No Medications Added</h3>
+                        <p>Add your first medication to get started</p>
+                    </div>
+                `;
+                return;
+            }
+
+            medList.innerHTML = "";
+
+            // Sort by date (newest first)
+            const sortedMeds = [...medications].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            sortedMeds.forEach((med) => {
+                const takenCount = takenLog[med.id]?.length || 0;
+                const lastTaken = takenLog[med.id]?.length ?
+                    `Last taken: ${formatDate(takenLog[med.id][takenLog[med.id].length - 1])}` :
+                    "Not taken yet";
+
+                const item = document.createElement("div");
+                item.className = "med-item";
+                item.innerHTML = `
+                    <div class="med-details">
+                        <div class="med-name">${med.name}</div>
+                        <div class="med-meta">
+                            <span><i class="fas fa-prescription-bottle-alt"></i> ${med.dose}</span>
+                            <span><i class="far fa-calendar-alt"></i> ${formatDate(med.date)}</span>
+                            <span><i class="far fa-clock"></i> ${med.time}</span>
+                        </div>
+                    </div>
+                    <div class="med-actions">
+                        <button class="btn btn-success" onclick="markTaken(${med.id})">
+                            <i class="fas fa-check"></i>
+                        </button>
+                        <button class="btn btn-warning" onclick="editMed(${med.id})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger" onclick="deleteMed(${med.id})">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                `;
+                medList.appendChild(item);
+            });
+        }
+
+        // Render today's schedule
+        function renderTodaySchedule() {
+            const today = new Date().toISOString().split("T")[0];
+            const todaysMeds = medications
+                .filter((m) => m.date === today)
+                .sort((a, b) => a.time.localeCompare(b.time));
+
+            if (todaysMeds.length === 0) {
+                todaySchedule.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-smile-beam"></i>
+                        <h3>No Medications Today</h3>
+                        <p>Enjoy your day medication-free!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            todaySchedule.innerHTML = "";
+
+            todaysMeds.forEach((med) => {
+                const now = new Date();
+                const medTime = new Date(`${today}T${med.time}`);
+                const isPast = now > medTime;
+                const isTaken = takenLog[med.id]?.includes(today);
+
+                const item = document.createElement("div");
+                item.className = `schedule-item ${isTaken ? "taken" : isPast ? "missed" : "upcoming"}`;
+
+                item.innerHTML = `
+                    <div class="schedule-header">
+                        <div class="schedule-time">
+                            <i class="far fa-clock"></i> ${med.time} - ${med.name}
+                        </div>
+                        <div class="schedule-status ${isTaken ? "status-taken" : isPast ? "status-missed" : "status-upcoming"}">
+                            ${isTaken ? "Taken" : isPast ? "Missed" : "Upcoming"}
+                        </div>
+                    </div>
+                    <div class="schedule-details">
+                        <div><i class="fas fa-prescription-bottle-alt"></i> ${med.dose}</div>
+                        <div><i class="fas fa-pills"></i> ${med.type || "Not specified"}</div>
+                    </div>
+                    <div class="schedule-footer">
+                        <small>Added on ${formatDate(med.added)}</small>
+                        ${!isTaken && !isPast ? `
+                            <button class="btn btn-success" onclick="markTaken(${med.id})">
+                                <i class="fas fa-check"></i> Mark as Taken
+                            </button>
+                        ` : ""}
+                    </div>
+                `;
+                todaySchedule.appendChild(item);
+            });
+        }
+
+        // Mark medication as taken
+        function markTaken(id) {
+            const date = new Date().toISOString().split("T")[0];
+            if (!takenLog[id]) takenLog[id] = [];
+
+            if (!takenLog[id].includes(date)) {
+                takenLog[id].push(date);
+                saveMedications();
+                renderAll();
+                showAlert("Medication marked as taken!", "success");
+            } else {
+                showAlert("Already marked as taken today.", "info");
+            }
+        }
+
+        // Delete medication
+        function deleteMed(id) {
+            showDialog(
+                "Delete Medication",
+                "Are you sure you want to delete this medication? This action cannot be undone.",
+                "Delete",
+                "Cancel",
+                () => {
+                    medications = medications.filter((med) => med.id !== id);
+                    delete takenLog[id];
+                    saveMedications();
+                    renderAll();
+                    showAlert("Medication deleted successfully.", "success");
+                }
+            );
+        }
+
+        // Edit medication
+        function editMed(id) {
+            const med = medications.find((m) => m.id === id);
+            if (!med) return;
+
+            document.getElementById("medName").value = med.name;
+            document.getElementById("medDose").value = med.dose;
+            document.getElementById("medDate").value = med.date;
+            document.getElementById("medTime").value = med.time;
+            document.getElementById("medType").value = med.type || "";
+
+            // Delete the old entry
+            deleteMed(id);
+        }
+
+        // Check for drug interactions
+        function checkInteractions(newMedName) {
+            const interactionMap = {
+                "Paracetamol": ["Ibuprofen", "Alcohol", "Warfarin"],
+                "Ibuprofen": ["Aspirin", "Blood Pressure Medications", "Lithium"],
+                "Aspirin": ["Warfarin", "NSAIDs", "Methotrexate"],
+                "Metformin": ["Insulin", "Contrast Dye", "Alcohol"],
+                "Warfarin": ["Vitamin K", "Antibiotics", "NSAIDs"],
+                "Simvastatin": ["Grapefruit", "Antifungals", "Macrolides"],
+                "Digoxin": ["Diuretics", "Calcium", "Antacids"]
+            };
+
+            const interactions = interactionMap[newMedName] || [];
+            const foundInteractions = [];
+
+            interactions.forEach((interactingDrug) => {
+                if (medications.some((m) => m.name === interactingDrug)) {
+                    foundInteractions.push(interactingDrug);
+                }
+            });
+
+            if (foundInteractions.length > 0) {
+                showAlert(
+                    `⚠️ Potential Interaction: ${newMedName} may interact with ${foundInteractions.join(", ")}`,
+                    "warning",
+                    6000
+                );
+                renderInteractionsList(newMedName, foundInteractions);
+            }
+        }
+
+        // Check all medications for interactions
+        function checkAllInteractions() {
+            const interactionMap = {
+                "Paracetamol": ["Ibuprofen", "Alcohol", "Warfarin"],
+                "Ibuprofen": ["Aspirin", "Blood Pressure Medications", "Lithium"],
+                "Aspirin": ["Warfarin", "NSAIDs", "Methotrexate"],
+                "Metformin": ["Insulin", "Contrast Dye", "Alcohol"],
+                "Warfarin": ["Vitamin K", "Antibiotics", "NSAIDs"],
+                "Simvastatin": ["Grapefruit", "Antifungals", "Macrolides"],
+                "Digoxin": ["Diuretics", "Calcium", "Antacids"]
+            };
+
+            let allInteractions = [];
+
+            medications.forEach(med => {
+                const interactions = interactionMap[med.name] || [];
+                interactions.forEach(interactingDrug => {
+                    if (medications.some(m => m.name === interactingDrug)) {
+                        if (!allInteractions.some(i =>
+                            (i.med1 === med.name && i.med2 === interactingDrug) ||
+                            (i.med1 === interactingDrug && i.med2 === med.name))) {
+                            allInteractions.push({
+                                med1: med.name,
+                                med2: interactingDrug
+                            });
+                        }
+                    }
+                });
+            });
+
+            renderInteractionsList(null, allInteractions);
+        }
+
+        // Render interactions list
+        function renderInteractionsList(newMed, interactions) {
+            if (interactions.length === 0) {
+                interactionsList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>No Interactions Found</h3>
+                        <p>Your current medications are safe to take together</p>
+                    </div>
+                `;
+                return;
+            }
+
+            interactionsList.innerHTML = `
+                <div class="interactions-header">
+                    <h4>Potential Medication Interactions</h4>
+                    <small>${newMed ? "New medication interaction" : "Current medication interactions"}</small>
+                </div>
+            `;
+
+            const interactionGroups = {};
+
+            // Group interactions by medication
+            interactions.forEach(interaction => {
+                const med1 = interaction.med1 || newMed;
+                const med2 = interaction.med2;
+
+                if (!interactionGroups[med1]) {
+                    interactionGroups[med1] = [];
+                }
+                interactionGroups[med1].push(med2);
+            });
+
+            // Create interaction items
+            for (const [med, interactingMeds] of Object.entries(interactionGroups)) {
+                const interactionItem = document.createElement("div");
+                interactionItem.className = "med-item interaction-item";
+                interactionItem.innerHTML = `
+                    <div class="med-details">
+                        <div class="med-name">${med}</div>
+                        <div class="interaction-details">
+                            <span>May interact with:</span>
+                            <div class="interacting-meds">
+                                ${interactingMeds.map(m => `<span class="interacting-med">${m}</span>`).join("")}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="med-actions">
+                        <button class="btn btn-danger" onclick="showInteractionWarning('${med}', '${interactingMeds.join(", ")}')">
+                            <i class="fas fa-exclamation-triangle"></i> Details
+                        </button>
+                    </div>
+                `;
+                interactionsList.appendChild(interactionItem);
+            }
+        }
+
+        // Show interaction warning
+        function showInteractionWarning(med1, med2) {
+            const interactionDetails = {
+                "Paracetamol + Ibuprofen": "Increased risk of liver damage and stomach bleeding",
+                "Paracetamol + Alcohol": "Increased risk of liver damage",
+                "Ibuprofen + Aspirin": "Increased risk of stomach bleeding",
+                "Metformin + Insulin": "Increased risk of hypoglycemia",
+                "Warfarin + Vitamin K": "Reduced effectiveness of Warfarin"
+            };
+
+            const key = `${med1} + ${med2}`;
+            const reverseKey = `${med2} + ${med1}`;
+            const detail = interactionDetails[key] || interactionDetails[reverseKey] ||
+                "Potential interaction that may require dosage adjustment or monitoring";
+
+            showDialog(
+                "Medication Interaction Warning",
+                `<strong>${med1} and ${med2}</strong><br><br>${detail}<br><br>
+                Please consult your healthcare provider about this potential interaction.`,
+                "Understood",
+                "",
+                () => { }
+            );
+        }
+
+        // Render adherence chart
+        function renderChart() {
+            const ctx = document.getElementById("adherenceChart").getContext("2d");
+            if (window.chartInstance) window.chartInstance.destroy();
+
+            if (medications.length === 0) {
+                document.getElementById("adherenceChart").innerHTML = `
+                    <div class="empty-state" style="padding: 2rem;">
+                        <i class="fas fa-chart-pie"></i>
+                        <p>No data available yet</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Prepare data for last 7 days
+            const labels = [];
+            const today = new Date();
+
+            for (let i = 6; i >= 0; i--) {
+                const date = new Date(today);
+                date.setDate(date.getDate() - i);
+                labels.push(date.toLocaleDateString("en-US", { weekday: "short" }));
+            }
+
+            // Calculate adherence rate for each day
+            const adherenceData = labels.map((_, index) => {
+                const day = new Date(today);
+                day.setDate(day.getDate() - (6 - index));
+                const dateStr = day.toISOString().split("T")[0];
+
+                let takenCount = 0;
+                let totalMeds = 0;
+
+                medications.forEach(med => {
+                    if (med.date <= dateStr) {
+                        totalMeds++;
+                        if (takenLog[med.id]?.includes(dateStr)) {
+                            takenCount++;
+                        }
+                    }
+                });
+
+                return totalMeds > 0 ? (takenCount / totalMeds) * 100 : 0;
+            });
+
+            window.chartInstance = new Chart(ctx, {
+                type: "line",
+                data: {
+                    labels,
+                    datasets: [{
+                        label: "Adherence Rate (%)",
+                        data: adherenceData,
+                        backgroundColor: "rgba(67, 97, 238, 0.2)",
+                        borderColor: "rgba(67, 97, 238, 1)",
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: (value) => `${value}%`
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: (context) => {
+                                    return `${context.dataset.label}: ${Math.round(context.raw)}%`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Download PDF report
+        downloadBtn.addEventListener("click", () => {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Header
+            doc.setFontSize(22);
+            doc.setTextColor(67, 97, 238);
+            doc.text("HealVerse Medication Report", 105, 20, { align: "center" });
+
+            doc.setFontSize(12);
+            doc.setTextColor(100, 100, 100);
+            doc.text(`Generated on ${new Date().toLocaleDateString()}`, 105, 28, {
+                align: "center",
+            });
+
+            // Current Medications
+            doc.setFontSize(16);
+            doc.setTextColor(0, 0, 0);
+            doc.text("Current Medications", 14, 40);
+
+            let y = 50;
+            medications.forEach((med, i) => {
+                const takenCount = takenLog[med.id]?.length || 0;
+                const adherence = Math.round((takenCount / medications.length) * 100);
+
+                doc.setFontSize(12);
+                doc.setTextColor(0, 0, 0);
+                doc.text(`${i + 1}. ${med.name} (${med.dose})`, 16, y);
+
+                doc.setTextColor(100, 100, 100);
+                doc.text(`Type: ${med.type || "Not specified"}`, 16, y + 5);
+                doc.text(`Scheduled: ${med.date} at ${med.time}`, 16, y + 10);
+                doc.text(`Taken ${takenCount} times (${adherence}% adherence)`, 16, y + 15);
+
+                y += 25;
+
+                // Page break if needed
+                if (y > 260) {
+                    doc.addPage();
+                    y = 20;
+                }
+            });
+
+            // Adherence Summary
+            doc.setFontSize(16);
+            doc.setTextColor(0, 0, 0);
+            doc.text("Adherence Summary", 14, y + 10);
+
+            doc.setFontSize(12);
+            doc.setTextColor(100, 100, 100);
+            doc.text("Your medication adherence statistics:", 16, y + 20);
+
+            const totalMeds = medications.length;
+            const totalTaken = Object.values(takenLog).reduce(
+                (sum, arr) => sum + arr.length,
+                0
+            );
+            const overallAdherence = totalMeds > 0 ? Math.round((totalTaken / totalMeds) * 100) : 0;
+
+            doc.text(`Total Medications: ${totalMeds}`, 16, y + 30);
+            doc.text(`Total Doses Taken: ${totalTaken}`, 16, y + 40);
+            doc.text(`Overall Adherence: ${overallAdherence}%`, 16, y + 50);
+
+            // Interactions Summary
+            if (medications.length > 1) {
+                doc.setFontSize(16);
+                doc.setTextColor(0, 0, 0);
+                doc.text("Potential Interactions", 14, y + 70);
+
+                doc.setFontSize(12);
+                doc.setTextColor(100, 100, 100);
+
+                // Simple interaction check (this would be more robust in a real app)
+                const commonInteractions = [
+                    ["Paracetamol", "Ibuprofen"],
+                    ["Metformin", "Insulin"],
+                    ["Warfarin", "Aspirin"]
+                ];
+
+                let hasInteractions = false;
+                commonInteractions.forEach(([med1, med2]) => {
+                    if (medications.some(m => m.name === med1) && medications.some(m => m.name === med2)) {
+                        doc.text(`⚠️ ${med1} may interact with ${med2}`, 16, y + 80);
+                        y += 10;
+                        hasInteractions = true;
+                    }
+                });
+
+                if (!hasInteractions) {
+                    doc.text("No known interactions detected", 16, y + 80);
+                    y += 10;
+                }
+            }
+
+            // Save the PDF
+            doc.save(`HealVerse_Medication_Report_${new Date().toISOString().split("T")[0]}.pdf`);
+        });
+
+        // Helper functions
+        function formatDate(dateString) {
+            const options = { year: "numeric", month: "short", day: "numeric" };
+            return new Date(dateString).toLocaleDateString("en-US", options);
+        }
+
+        function showAlert(message, type, duration = 3000) {
+            const alert = document.createElement("div");
+            alert.className = `alert alert-${type}`;
+            alert.innerHTML = `
+                <span>${message}</span>
+                <button class="alert-close">&times;</button>
+            `;
+
+            alertContainer.appendChild(alert);
+            alert.classList.add("show");
+
+            // Close button
+            alert.querySelector(".alert-close").addEventListener("click", () => {
+                alert.classList.remove("show");
+                setTimeout(() => alert.remove(), 300);
+            });
+
+            // Auto-close
+            setTimeout(() => {
+                alert.classList.remove("show");
+                setTimeout(() => alert.remove(), 300);
+            }, duration);
+        }
+
+        function showDialog(title, message, confirmText, cancelText, onConfirm) {
+            const dialog = document.createElement("div");
+            dialog.className = "dialog-overlay";
+            dialog.innerHTML = `
+                <div class="dialog">
+                    <h3 class="dialog-title">${title}</h3>
+                    <p class="dialog-message">${message}</p>
+                    <div class="dialog-actions">
+                        ${cancelText ? `<button class="btn btn-secondary cancel-btn">${cancelText}</button>` : ""}
+                        <button class="btn btn-primary confirm-btn">${confirmText}</button>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(dialog);
+            setTimeout(() => dialog.classList.add("active"), 10);
+
+            const closeDialog = () => {
+                dialog.classList.remove("active");
+                setTimeout(() => dialog.remove(), 300);
+            };
+
+            if (cancelText) {
+                dialog.querySelector(".cancel-btn").addEventListener("click", closeDialog);
+            }
+
+            dialog.querySelector(".confirm-btn").addEventListener("click", () => {
+                onConfirm();
+                closeDialog();
+            });
+        }
+    </script>
 </body>
 
 </html>
