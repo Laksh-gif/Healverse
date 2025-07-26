@@ -1,247 +1,2227 @@
+Here's the improved code with your requested changes:
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HealVerse - AI-Powered Healthcare Revolution</title>
-    <link rel="stylesheet" href="style/styles.css">
-
-    <!-- Google Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
-
-    <!-- Three.js for 3D background -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
-
-    <!-- Font Awesome -->
+    <title>HealVerse - AI-Powered Healthcare Solutions</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- AOS Animation Library -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Rubik:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            /* More vibrant blue */
+            --primary-light: #3b82f6;
+            --secondary: #14b8a6;
+            /* Softer teal */
+            --accent: #f59e0b;
+            /* Warmer gold */
+            --dark: #1f2937;
+            --darker: #111827;
+            --light: #f9fafb;
+            --gray: #6b7280;
+            --gray-light: #e5e7eb;
+            /* Lighter gray */
+            --success: #10b981;
+            --danger: #ef4444;
+
+            --font-primary: "Manrope", sans-serif;
+            --font-secondary: "Rubik", sans-serif;
+
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.15);
+
+            --radius-sm: 0.375rem;
+            --radius: 0.625rem;
+            --radius-md: 0.875rem;
+            --radius-lg: 1.25rem;
+            --radius-full: 9999px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            color: var(--dark);
+            background-color: var(--light);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: var(--font-primary);
+            font-weight: 700;
+            color: var(--darker);
+            line-height: 1.3;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+        }
+
+        h2 {
+            font-size: 2.75rem;
+        }
+
+        h3 {
+            font-size: 1.75rem;
+        }
+
+        h4 {
+            font-size: 1.25rem;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        section {
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        /* Improved Button Animations */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.75rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border: none;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            z-index: -1;
+            transition: transform 0.5s ease;
+            transform: scaleX(1);
+        }
+
+        .btn:hover::before {
+            transform: scaleX(1.05);
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 0;
+            transition: transform 0.5s, opacity 0.5s;
+        }
+
+        .btn:hover::after {
+            transform: translate(-50%, -50%) scale(20);
+            opacity: 1;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+            transform: translateY(-3px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            box-shadow: inset 0 0 0 2px var(--primary);
+            transition: all 0.4s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+            box-shadow: inset 0 0 0 2px var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Quick Contact Button */
+        .quick-contact {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            box-shadow: var(--shadow-lg);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .quick-contact:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Modal */
+        .contact-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .contact-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2.5rem;
+            border-radius: var(--radius-lg);
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .contact-modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--primary);
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 1rem;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            box-shadow: var(--shadow-md);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 1.75rem;
+            color: var(--primary);
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-icon {
+            font-size: 1.5em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-link {
+            position: relative;
+            font-weight: 500;
+            font-size: 1.125rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--accent);
+        }
+
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            bottom: -0.5rem;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 2rem;
+            height: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background-color: var(--dark);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            padding: 9rem 0 6rem;
+            background: linear-gradient(135deg, var(--light), rgba(37, 99, 235, 0.05));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(37, 99, 235, 0.03), rgba(20, 184, 166, 0.03));
+            animation: gradientShift 12s ease infinite;
+            z-index: -1;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .hero-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4rem;
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .hero-heading {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 1.75rem;
+            position: relative;
+        }
+
+        .hero-heading .highlight {
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-heading .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transform-origin: left;
+            animation: highlightExpand 1.5s ease-in-out forwards;
+            animation-delay: 0.5s;
+            z-index: -1;
+        }
+
+        @keyframes highlightExpand {
+            0% {
+                transform: scaleX(0);
+            }
+
+            50% {
+                transform: scaleX(1);
+            }
+
+            100% {
+                transform: scaleX(1);
+            }
+        }
+
+        .hero-subtext {
+            font-size: 1.25rem;
+            color: var(--gray);
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .hero-image {
+            flex: 1;
+            position: relative;
+        }
+
+        .hero-img {
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+            transition: transform 0.5s ease;
+        }
+
+        .hero-img:hover {
+            transform: scale(1.02);
+        }
+
+        .cta-banner {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.75rem;
+            border-radius: var(--radius-md);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+            box-shadow: var(--shadow-md);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.02);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .cta-banner p {
+            font-size: 1.125rem;
+            flex: 1;
+        }
+
+        /* Benefits Section */
+        .benefits-section {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .benefit-item {
+            text-align: center;
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: all 0.4s ease;
+            background: white;
+        }
+
+        .benefit-item:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .benefit-item i {
+            font-size: 2.75rem;
+            color: var(--primary);
+            margin-bottom: 1.25rem;
+            transition: transform 0.3s ease;
+        }
+
+        .benefit-item:hover i {
+            transform: scale(1.2);
+        }
+
+        .benefit-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .benefit-item p {
+            font-size: 1rem;
+            color: var(--gray);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding: 5rem 0;
+            background: var(--light);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .stat-item {
+            background: white;
+            padding: 2.5rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            display: inline-block;
+        }
+
+        .stat-number.animated {
+            animation: countUp 1.5s ease-out forwards;
+        }
+
+        @keyframes countUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .stat-label {
+            font-size: 1.125rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        /* Demo Section */
+        .demo-section {
+            padding: 6rem 0;
+            background: white;
+        }
+
+        .demo-content {
+            display: flex;
+            gap: 4rem;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .demo-form {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .demo-form h3 {
+            font-size: 2rem;
+            margin-bottom: 1.75rem;
+        }
+
+        .demo-form p {
+            font-size: 1.125rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+        }
+
+        .demo-result {
+            padding: 1.5rem;
+            background: var(--light);
+            border-radius: var(--radius);
+            margin-top: 1.5rem;
+            border-left: 4px solid var(--success);
+        }
+
+        .demo-image {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        /* Team Section */
+        .team-section {
+            padding: 6rem 0;
+            background: var(--light);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .team-card {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .team-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .team-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1.25rem;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s ease;
+        }
+
+        .team-card:hover .team-img {
+            transform: scale(1.1);
+        }
+
+        .team-bio {
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+
+        /* Trust Badges */
+        .trust-section {
+            padding: 3.5rem 0;
+            background: white;
+        }
+
+        .trust-label {
+            text-align: center;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .trust-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 3rem;
+        }
+
+        .trust-logos img {
+            height: 45px;
+            opacity: 0.9;
+            transition: all 0.3s ease;
+        }
+
+        .trust-logos img:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 6rem 0;
+            background: white;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4.5rem;
+        }
+
+        .section-title {
+            font-size: 2.75rem;
+            margin-bottom: 1.25rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            font-size: 1.25rem;
+            color: var(--gray);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(37, 99, 235, 0.08);
+            border-radius: var(--radius);
+            margin-bottom: 1.75rem;
+            font-size: 2rem;
+            color: var(--primary);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: rotate(15deg) scale(1.1);
+        }
+
+        .feature-title {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-description {
+            color: var(--gray);
+            margin-bottom: 1.75rem;
+        }
+
+        .progress-container {
+            margin-bottom: 1.75rem;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--gray-light);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 0;
+            position: relative;
+            transition: width 1s ease-in-out;
+        }
+
+        .feature-card:hover .progress {
+            width: var(--progress-width);
+        }
+
+        .progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 20px;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+            transform: translateX(100%);
+            animation: progressShine 1.5s infinite;
+        }
+
+        @keyframes progressShine {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        .feature-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            color: var(--accent);
+            transition: gap 0.3s ease;
+        }
+
+        .feature-link:hover {
+            gap: 0.75rem;
+        }
+
+        /* Solutions Section */
+        .solutions-section {
+            padding: 6rem 0;
+            background: var(--light);
+        }
+
+        .solutions-tabs {
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .tab-header {
+            display: flex;
+            background: var(--gray-light);
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .tab-header::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab-btn {
+            flex: 1 0 auto;
+            padding: 1.25rem 1.5rem;
+            font-family: var(--font-primary);
+            font-weight: 600;
+            text-align: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--gray);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .tab-btn:hover,
+        .tab-btn.active {
+            color: var(--primary);
+            background: white;
+        }
+
+        .tab-btn.active::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .tab-content {
+            background: white;
+            padding: 3rem;
+        }
+
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .solution-content {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+
+        .solution-text {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .solution-text h3 {
+            font-size: 2rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .solution-text p {
+            margin-bottom: 1.75rem;
+            color: var(--gray);
+        }
+
+        .solution-features {
+            margin-bottom: 2.5rem;
+            list-style: none;
+        }
+
+        .solution-features li {
+            margin-bottom: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .solution-features i {
+            color: var(--success);
+        }
+
+        .solution-image {
+            flex: 1;
+            min-width: 0;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            transition: transform 0.5s ease;
+        }
+
+        .solution-image:hover {
+            transform: scale(1.02);
+        }
+
+        /* Blog Section */
+        .blog-section {
+            padding: 6rem 0;
+            background: white;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .blog-img {
+            height: 220px;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .blog-card:hover .blog-img {
+            transform: scale(1.05);
+        }
+
+        .blog-card-content {
+            padding: 1.5rem;
+        }
+
+        .blog-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .blog-card p {
+            color: var(--gray);
+            margin-bottom: 1.25rem;
+        }
+
+        .blog-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            color: var(--accent);
+            transition: gap 0.3s ease;
+        }
+
+        .blog-link:hover {
+            gap: 0.75rem;
+        }
+
+        /* Testimonials */
+        .testimonials-section {
+            padding: 6rem 0;
+            background: var(--light);
+        }
+
+        .testimonials-carousel {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .carousel-inner {
+            display: flex;
+            overflow: hidden;
+            border-radius: var(--radius-md);
+        }
+
+        .testimonial-card {
+            min-width: 100%;
+            background: white;
+            padding: 3rem;
+            box-shadow: var(--shadow);
+            display: none;
+        }
+
+        .testimonial-card.active {
+            display: block;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .testimonial-content {
+            position: relative;
+        }
+
+        .quote-icon {
+            position: absolute;
+            top: -1rem;
+            left: -1rem;
+            font-size: 3.5rem;
+            color: rgba(37, 99, 235, 0.08);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1.75rem;
+            font-size: 1.125rem;
+            line-height: 1.8;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .author-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .author-info h4 {
+            font-size: 1.25rem;
+        }
+
+        .author-info p {
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+
+        .carousel-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.25rem;
+            margin-top: 2rem;
+        }
+
+        .carousel-prev,
+        .carousel-next {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-prev:hover,
+        .carousel-next:hover {
+            background: var(--primary-light);
+            transform: scale(1.1);
+        }
+
+        .carousel-dots {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            background: var(--gray-light);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-dot.active {
+            background: var(--accent);
+            transform: scale(1.2);
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+            padding: 6rem 0;
+            background: var(--light);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .pricing-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .pricing-card h3 {
+            font-size: 1.75rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .pricing-description {
+            color: var(--gray);
+            margin-bottom: 1.75rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2.5rem;
+        }
+
+        .pricing-features li {
+            margin-bottom: 0.875rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .pricing-features i {
+            color: var(--success);
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 6rem 0;
+            background: white;
+        }
+
+        .faq-list {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 1.25rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 1.5rem;
+            background: white;
+            border: none;
+            text-align: left;
+            font-family: var(--font-primary);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: var(--gray-light);
+        }
+
+        .faq-question[aria-expanded="true"] {
+            background: var(--primary);
+            color: white;
+        }
+
+        .faq-question[aria-expanded="true"] i {
+            transform: rotate(180deg);
+            color: white;
+        }
+
+        .faq-question i {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 1.5rem;
+            background: white;
+            color: var(--gray);
+        }
+
+        .faq-answer.active {
+            display: block;
+            animation: slideDown 0.4s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                height: 0;
+                opacity: 0;
+            }
+
+            to {
+                height: auto;
+                opacity: 1;
+            }
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+            animation: rotate 20s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .cta-title {
+            font-size: 2.75rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .cta-text {
+            font-size: 1.25rem;
+            max-width: 800px;
+            margin: 0 auto 2.5rem;
+            opacity: 0.9;
+        }
+
+        .cta-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 2.5rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+        }
+
+        .form-step {
+            display: none;
+        }
+
+        .form-step.active {
+            display: block;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .cta-form h3 {
+            font-size: 1.75rem;
+            color: var(--darker);
+            margin-bottom: 1.75rem;
+        }
+
+        .cta-form input,
+        .cta-form select {
+            width: 100%;
+            padding: 1.25rem;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--darker);
+            color: white;
+            padding: 5rem 0 0;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 3.5rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .footer-col {
+            padding: 1rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 1.75rem;
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-about-text {
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+            line-height: 1.8;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 0.875rem;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .newsletter-form input::placeholder {
+            color: var(--gray-light);
+        }
+
+        .newsletter-form button {
+            padding: 0.875rem 1.5rem;
+            white-space: nowrap;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .footer-title {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.75rem;
+        }
+
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        .footer-contact {
+            list-style: none;
+        }
+
+        .footer-contact li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .footer-contact i {
+            margin-top: 0.25rem;
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .footer-copyright {
+            opacity: 0.7;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-legal a {
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-legal a:hover {
+            opacity: 1;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 1200px) {
+
+            .hero-container,
+            .demo-content,
+            .solution-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 3rem;
+            }
+
+            .hero-content,
+            .demo-form,
+            .solution-text {
+                max-width: 100%;
+            }
+
+            .hero-cta,
+            .cta-actions {
+                justify-content: center;
+            }
+
+            .cta-banner {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 2.75rem;
+            }
+
+            h2 {
+                font-size: 2.25rem;
+            }
+
+            .section-title::after {
+                bottom: -8px;
+                width: 60px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            section {
+                padding: 4rem 0;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .hero-heading .highlight::after {
+                height: 4px;
+            }
+
+            .hero-cta,
+            .cta-actions {
+                flex-direction: column;
+                gap: 1.25rem;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 320px;
+                height: 100vh;
+                background: white;
+                flex-direction: column;
+                padding: 6rem 2rem 2rem;
+                box-shadow: var(--shadow-lg);
+                transition: right 0.4s ease;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-actions {
+                display: none;
+            }
+
+            .nav-toggle {
+                display: flex;
+            }
+
+            .nav-toggle.active span:nth-child(1) {
+                transform: translateY(0.5rem) rotate(45deg);
+            }
+
+            .nav-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .nav-toggle.active span:nth-child(3) {
+                transform: translateY(-0.5rem) rotate(-45deg);
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-col {
+                text-align: center;
+            }
+
+            .footer-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .footer-links a:hover {
+                transform: none;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+            }
+
+            .btn {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .feature-card,
+            .pricing-card {
+                padding: 1.5rem;
+            }
+
+            .tab-btn {
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .tab-content {
+                padding: 1.5rem;
+            }
+
+            .testimonial-card {
+                padding: 1.5rem;
+            }
+
+            .cta-form {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .slide-in-left.appear {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .slide-in-right.appear {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .scale-in.appear {
+            opacity: 1;
+            transform: scale(1);
+        }
+    </style>
 </head>
 
 <body>
-    <!-- 3D Background Canvas -->
-    <div id="3d-background"></div>
+    <!-- Quick Contact Button -->
+    <button class="quick-contact" aria-label="Open Quick Contact Form">
+        <i class="fas fa-comment-medical"></i>
+    </button>
+
+    <!-- Quick Contact Modal -->
+    <div class="contact-modal" id="contactModal">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close Contact Form">×</button>
+            <h3>Contact Us</h3>
+            <form class="contact-form" aria-label="Quick Contact Form">
+                <input type="text" placeholder="Your Name" aria-label="Name" required>
+                <input type="email" placeholder="Your Email" aria-label="Email" required>
+                <textarea placeholder="Your Message" aria-label="Message" required></textarea>
+                <button type="submit" class="btn-primary">Send Message</button>
+            </form>
+        </div>
+    </div>
 
     <!-- Navigation -->
-    <header class="navbar">
+    <header class="navbar" role="navigation" aria-label="Main navigation">
         <div class="container nav-container">
-            <div class="logo" data-aos="fade-right">
+            <a href="#home" class="logo" aria-label="HealVerse Home">
                 <span class="logo-icon">⚕</span>
                 <span>HealVerse</span>
-            </div>
+            </a>
 
-            <nav class="nav-links">
-                <a href="#home" class="nav-link active" data-aos="fade-down" data-aos-delay="100">Home</a>
-                <a href="#features" class="nav-link" data-aos="fade-down" data-aos-delay="150">Features</a>
-                <a href="#solutions" class="nav-link" data-aos="fade-down" data-aos-delay="200">Solutions</a>
-                <a href="#testimonials" class="nav-link" data-aos="fade-down" data-aos-delay="250">Testimonials</a>
-                <a href="#contact" class="nav-link" data-aos="fade-down" data-aos-delay="300">Contact</a>
+            <nav class="nav-links" aria-label="Primary navigation">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#solutions" class="nav-link">Solutions</a>
+                <a href="#team" class="nav-link">Team</a>
+                <a href="#testimonials" class="nav-link">Testimonials</a>
+                <a href="#faq" class="nav-link">FAQ</a>
             </nav>
 
-            <div class="nav-actions" data-aos="fade-left">
-                <a href="#" class="btn-secondary pulse-animate">Login</a>
-                <a href="#" class="btn-primary pulse-animate">Get Started</a>
+            <div class="nav-actions">
+                <a href="#" class="btn btn-secondary">Login</a>
+                <a href="#demo" class="btn btn-primary">Get Started</a>
             </div>
 
-            <div class="nav-toggle" id="navToggle">
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
         </div>
     </header>
 
     <!-- Hero Section -->
     <section class="hero-section" id="home">
-        <div class="container">
+        <div class="container hero-container">
             <div class="hero-content">
                 <h1 class="hero-heading">
-                    <span class="highlight">Healthcare</span> with AI
+                    Transforming <span class="highlight">Healthcare</span> with AI-Powered Solutions
                 </h1>
                 <p class="hero-subtext">
-                    HealVerse combines cutting-edge AI with medical expertise to deliver personalized,
-                    predictive healthcare solutions that improve outcomes and reduce costs.
+                    HealVerse leverages cutting-edge AI to deliver precise diagnostics, predictive analytics, and
+                    seamless care solutions for superior patient outcomes.
                 </p>
                 <div class="hero-cta">
-                    <a href="#" class="btn btn-primary pulse-animate">
-                        <i class="fas fa-rocket"></i> Start Free Trial
+                    <a href="#demo" class="btn btn-primary btn-lg">
+                        <i class="fas fa-calendar-check"></i> Book Consultation
                     </a>
-                    <a href="#" class="btn btn-secondary pulse-animate" style="animation-delay: 0.2s">
+                    <a href="#" class="btn btn-secondary btn-lg">
                         <i class="fas fa-play-circle"></i> Watch Demo
                     </a>
                 </div>
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <div class="stat-number">95%</div>
-                        <div class="stat-label">Diagnostic Accuracy</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">10k+</div>
-                        <div class="stat-label">Patients Served</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">40%</div>
-                        <div class="stat-label">Faster Recovery</div>
-                    </div>
+                <div class="cta-banner">
+                    <p>Discover how HealVerse can transform your practice. Schedule a free consultation today!</p>
+                    <a href="#demo" class="btn btn-primary">Get Started Now</a>
                 </div>
             </div>
             <div class="hero-image">
-                <!-- <div class="ai-doctor-container">
-                    <img src="ai-doctor.png" alt="AI Doctor" class="ai-doctor">
+                <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80"
+                    alt="AI Diagnostic Dashboard showing patient health metrics" class="hero-img">
+            </div>
+        </div>
+    </section>
 
-                    <div class="vital-signs-orbit">
-                        <div class="vital-sign heart-rate">
-                            <i class="fas fa-heartbeat"></i>
-                            <span>Heart Rate</span>
-                        </div>
-                        <div class="vital-sign temperature">
-                            <i class="fas fa-thermometer-half"></i>
-                            <span>Temp</span>
-                        </div>
-                        <div class="vital-sign blood-pressure">
-                            <i class="fas fa-tint"></i>
-                            <span>BP Monitor</span>
-                        </div>
-                    </div>
-                </div> -->
+    <!-- Key Benefits Section -->
+    <section class="benefits-section fade-in">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Why Choose HealVerse?</h2>
+                <p class="section-subtitle">Our platform delivers measurable results for healthcare providers</p>
+            </div>
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>Proven Accuracy</h3>
+                    <p>95% diagnostic accuracy with AI-driven insights</p>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-user-md"></i>
+                    <h3>Scalable Solutions</h3>
+                    <p>Trusted by 10,000+ healthcare professionals</p>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-clock"></i>
+                    <h3>Efficient Care</h3>
+                    <p>40% faster patient recovery times</p>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Data Security</h3>
+                    <p>HIPAA-compliant with end-to-end encryption</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Counter -->
+    <section class="stats-section fade-in">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" data-count="95">0%</div>
+                    <div class="stat-label">Diagnostic Accuracy</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="10000">0</div>
+                    <div class="stat-label">Patients Served</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="40">0%</div>
+                    <div class="stat-label">Faster Recovery</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="24">0</div>
+                    <div class="stat-label">Hours Support</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Demo Section -->
+    <section class="demo-section fade-in" id="demo">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Experience Our AI Diagnostics</h2>
+                <p class="section-subtitle">See HealVerse in action with our interactive demo</p>
+            </div>
+            <div class="demo-content">
+                <div class="demo-image">
+                    <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80"
+                        alt="Diagnostic Tool Interface">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section fade-in" id="team">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Meet Our Experts</h2>
+                <p class="section-subtitle">Our team of innovators driving healthcare forward</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-card">
+                    <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80"
+                        alt="Dr. Lisa Carter" class="team-img">
+                    <h3>Dr. Lisa Carter</h3>
+                    <p>Chief Medical Officer</p>
+                    <p class="team-bio">Expert in AI-driven diagnostics with 20+ years in healthcare.</p>
+                </div>
+                <div class="team-card">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80"
+                        alt="Prof. James Lee" class="team-img">
+                    <h3>Prof. James Lee</h3>
+                    <p>AI Research Lead</p>
+                    <p class="team-bio">Pioneering predictive analytics for medical applications.</p>
+                </div>
+                <div class="team-card">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80"
+                        alt="Dr. Aisha Khan" class="team-img">
+                    <h3>Dr. Aisha Khan</h3>
+                    <p>Telemedicine Director</p>
+                    <p class="team-bio">Leading virtual care innovations for global access.</p>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Trust Badges -->
-    <section class="trust-section">
+    <section class="trust-section fade-in">
         <div class="container">
-            <p class="trust-label">Trusted by leading healthcare providers worldwide</p>
+            <p class="trust-label">Trusted by Leading Healthcare Providers</p>
             <div class="trust-logos">
-                <img src="assets/logo-mayo.png" alt="Mayo Clinic" data-aos="zoom-in">
-                <img src="assets/logo-johns-hopkins.png" alt="Johns Hopkins" data-aos="zoom-in" data-aos-delay="100">
-                <img src="assets/logo-cleveland.png" alt="Cleveland Clinic" data-aos="zoom-in" data-aos-delay="200">
-                <img src="assets/logo-stanford.png" alt="Stanford Health" data-aos="zoom-in" data-aos-delay="300">
-                <img src="assets/logo-nih.png" alt="NIH" data-aos="zoom-in" data-aos-delay="400">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Mayo_Clinic_logo.svg/1200px-Mayo_Clinic_logo.svg.png"
+                    alt="Mayo Clinic" style="height: 40px;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Johns_Hopkins_University_logo.svg/1200px-Johns_Hopkins_University_logo.svg.png"
+                    alt="Johns Hopkins" style="height: 40px;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cleveland_Clinic_logo.svg/1200px-Cleveland_Clinic_logo.svg.png"
+                    alt="Cleveland Clinic" style="height: 40px;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Stanford_Health_Care_Logo.svg/1200px-Stanford_Health_Care_Logo.svg.png"
+                    alt="Stanford Health" style="height: 40px;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/National_Institutes_of_Health_logo.svg/1200px-National_Institutes_of_Health_logo.svg.png"
+                    alt="NIH" style="height: 40px;">
             </div>
         </div>
     </section>
 
     <!-- Core Features -->
-    <section class="features-section" id="features">
+    <section class="features-section fade-in" id="features">
         <div class="container">
-            <div class="section-header" data-aos="fade-up">
+            <div class="section-header">
                 <h2 class="section-title">AI-Powered Healthcare Solutions</h2>
-                <p class="section-subtitle">
-                    Our platform integrates multiple technologies to deliver comprehensive care
-                </p>
+                <p class="section-subtitle">Comprehensive tools to enhance patient care and operational efficiency</p>
             </div>
-
             <div class="features-grid">
-                <!-- Feature 1 -->
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-brain"></i>
                     </div>
                     <h3 class="feature-title">Advanced Diagnostics</h3>
                     <p class="feature-description">
-                        Our AI analyzes symptoms, medical history, and test results with 95% accuracy to provide
-                        differential diagnoses.
+                        AI-driven analysis with 95% accuracy for precise differential diagnoses.
                     </p>
-                    <a href="#" class="feature-link">
-                        Learn more <i class="fas fa-arrow-right"></i>
-                    </a>
-                    <div class="feature-wave"></div>
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span>Accuracy</span>
+                            <span>95%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress" style="--progress-width: 95%;"></div>
+                        </div>
+                    </div>
+                    <a href="#" class="feature-link">Learn More <i class="fas fa-arrow-right"></i></a>
                 </div>
-
-                <!-- Feature 2 -->
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-heartbeat"></i>
                     </div>
-                    <h3 class="feature-title">Real-time Monitoring</h3>
+                    <h3 class="feature-title">Health Habit Tracker</h3>
                     <p class="feature-description">
-                        Continuous tracking of 50+ health parameters with smart alerts for abnormal readings.
+                        Track your Health Goals and set more for the future.
                     </p>
-                    <a href="#" class="feature-link">
-                        Learn more <i class="fas fa-arrow-right"></i>
-                    </a>
-                    <div class="feature-wave"></div>
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span>Effectiveness</span>
+                            <span>100%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress" style="--progress-width: 80%;"></div>
+                        </div>
+                    </div>
+                    <a href="health-habit.html" class="feature-link">Learn More <i class="fas fa-arrow-right"></i></a>
                 </div>
-
-                <!-- Feature 3 -->
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-procedures"></i>
                     </div>
                     <h3 class="feature-title">Treatment Planning</h3>
                     <p class="feature-description">
-                        Personalized treatment plans optimized for efficacy and minimal side effects.
+                        Personalized plans optimized for efficacy and minimal side effects.
                     </p>
-                    <a href="#" class="feature-link">
-                        Learn more <i class="fas fa-arrow-right"></i>
-                    </a>
-                    <div class="feature-wave"></div>
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span>Success Rate</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress" style="--progress-width: 90%;"></div>
+                        </div>
+                    </div>
+                    <a href="treatment-planning.html" class="feature-link">Learn More <i
+                            class="fas fa-arrow-right"></i></a>
                 </div>
-
-                <!-- Feature 4 -->
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
                     <h3 class="feature-title">Predictive Analytics</h3>
                     <p class="feature-description">
-                        Forecast health risks and outcomes with our proprietary predictive models.
+                        Forecast health risks with proprietary AI models.
                     </p>
-                    <a href="predictive-analysis.html" class="feature-link">
-                        Learn more <i class="fas fa-arrow-right"></i>
-                    </a>
-                    <div class="feature-wave"></div>
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span>Accuracy</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress" style="--progress-width: 85%;"></div>
+                        </div>
+                    </div>
+                    <a href="predictive-analysis.html" class="feature-link">Learn More <i
+                            class="fas fa-arrow-right"></i></a>
                 </div>
-
-                <!-- Feature 5 -->
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
+                <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-user-md"></i>
                     </div>
                     <h3 class="feature-title">Virtual Consultations</h3>
                     <p class="feature-description">
-                        Secure video consultations with specialists from our global network.
+                        Secure video consultations with global specialists.
                     </p>
-                    <a href="#" class="feature-link">
-                        Learn more <i class="fas fa-arrow-right"></i>
-                    </a>
-                    <div class="feature-wave"></div>
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span>Satisfaction</span>
+                            <span>88%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress" style="--progress-width: 88%;"></div>
+                        </div>
+                    </div>
+                    <a href="#" class="feature-link">Learn More <i class="fas fa-arrow-right"></i></a>
                 </div>
-
-                <!-- Feature 6 -->
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="600">
+                <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-pills"></i>
                     </div>
                     <h3 class="feature-title">Medication Management</h3>
                     <p class="feature-description">
-                        Intelligent medication tracking with interaction checks and adherence monitoring.
+                        Intelligent tracking with interaction checks and adherence monitoring.
                     </p>
-                    <a href="medical-management.html" class="feature-link">
-                        Learn more <i class="fas fa-arrow-right"></i>
-                    </a>
-                    <div class="feature-wave"></div>
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span>Adherence</span>
+                            <span>92%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress" style="--progress-width: 92%;"></div>
+                        </div>
+                    </div>
+                    <a href="medical-management.html" class="feature-link">Learn More <i
+                            class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Solutions Section -->
-    <section class="solutions-section" id="solutions">
+    <section class="solutions-section fade-in" id="solutions">
         <div class="container">
-            <div class="section-header" data-aos="fade-up">
+            <div class="section-header">
                 <h2 class="section-title">Tailored Solutions for Every Need</h2>
-                <p class="section-subtitle">
-                    We provide specialized solutions for different healthcare scenarios
-                </p>
+                <p class="section-subtitle">Specialized tools for diverse healthcare scenarios</p>
             </div>
-
             <div class="solutions-tabs">
                 <div class="tab-header">
                     <button class="tab-btn active" data-tab="hospitals">Hospitals</button>
@@ -249,15 +2229,12 @@
                     <button class="tab-btn" data-tab="telemedicine">Telemedicine</button>
                     <button class="tab-btn" data-tab="research">Research</button>
                 </div>
-
                 <div class="tab-content">
                     <div class="tab-pane active" id="hospitals">
                         <div class="solution-content">
-                            <div class="solution-text" data-aos="fade-right">
+                            <div class="solution-text">
                                 <h3>Hospital System Integration</h3>
-                                <p>
-                                    Seamlessly integrate HealVerse with your existing hospital systems for enhanced
-                                    patient care and operational efficiency.
+                                <p>Seamlessly integrate with hospital systems to enhance patient care and efficiency.
                                 </p>
                                 <ul class="solution-features">
                                     <li><i class="fas fa-check-circle"></i> Real-time patient monitoring</li>
@@ -265,85 +2242,68 @@
                                     <li><i class="fas fa-check-circle"></i> Predictive readmission risk scoring</li>
                                     <li><i class="fas fa-check-circle"></i> Staff workflow optimization</li>
                                 </ul>
-                                <a href="#" class="btn-primary">
-                                    <i class="fas fa-book"></i> Request Hospital Demo
-                                </a>
+                                <a href="#" class="btn-primary">Request Demo</a>
                             </div>
-                            <div class="solution-image" data-aos="fade-left">
-                                <img src="assets/hospital-dashboard.jpg" alt="Hospital Dashboard" class="zoom-animate">
+                            <div class="solution-image">
+                                <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80"
+                                    alt="Hospital Dashboard">
                             </div>
                         </div>
                     </div>
-
                     <div class="tab-pane" id="clinics">
                         <div class="solution-content">
-                            <div class="solution-text" data-aos="fade-right">
+                            <div class="solution-text">
                                 <h3>Clinic Practice Management</h3>
-                                <p>
-                                    Streamline your clinic operations with our all-in-one practice management solution
-                                    designed for small to medium healthcare practices.
-                                </p>
+                                <p>Streamline operations for small to medium healthcare practices.</p>
                                 <ul class="solution-features">
                                     <li><i class="fas fa-check-circle"></i> Automated appointment scheduling</li>
                                     <li><i class="fas fa-check-circle"></i> Integrated billing and coding</li>
                                     <li><i class="fas fa-check-circle"></i> Patient records management</li>
                                     <li><i class="fas fa-check-circle"></i> Staff productivity tracking</li>
                                 </ul>
-                                <a href="#" class="btn-primary">
-                                    <i class="fas fa-book"></i> Learn More
-                                </a>
+                                <a href="#" class="btn-primary">Learn More</a>
                             </div>
-                            <div class="solution-image" data-aos="fade-left">
-                                <img src="assets/clinic-dashboard.jpg" alt="Clinic Dashboard" class="zoom-animate">
+                            <div class="solution-image">
+                                <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80"
+                                    alt="Clinic Dashboard">
                             </div>
                         </div>
                     </div>
-
                     <div class="tab-pane" id="telemedicine">
                         <div class="solution-content">
-                            <div class="solution-text" data-aos="fade-right">
+                            <div class="solution-text">
                                 <h3>Virtual Care Platform</h3>
-                                <p>
-                                    Deliver high-quality remote care with our comprehensive telemedicine solution that
-                                    connects providers and patients seamlessly.
-                                </p>
+                                <p>Deliver high-quality remote care with seamless provider-patient connectivity.</p>
                                 <ul class="solution-features">
                                     <li><i class="fas fa-check-circle"></i> Secure video consultations</li>
                                     <li><i class="fas fa-check-circle"></i> Remote patient monitoring</li>
                                     <li><i class="fas fa-check-circle"></i> Digital prescription services</li>
                                     <li><i class="fas fa-check-circle"></i> Integrated health records</li>
                                 </ul>
-                                <a href="#" class="btn-primary">
-                                    <i class="fas fa-book"></i> Request Demo
-                                </a>
+                                <a href="#" class="btn-primary">Request Demo</a>
                             </div>
-                            <div class="solution-image" data-aos="fade-left">
-                                <img src="assets/telemedicine-platform.jpg" alt="Telemedicine Platform"
-                                    class="zoom-animate">
+                            <div class="solution-image">
+                                <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80"
+                                    alt="Telemedicine Platform">
                             </div>
                         </div>
                     </div>
-
                     <div class="tab-pane" id="research">
                         <div class="solution-content">
-                            <div class="solution-text" data-aos="fade-right">
+                            <div class="solution-text">
                                 <h3>Medical Research Suite</h3>
-                                <p>
-                                    Accelerate your medical research with our AI-powered analytics platform designed for
-                                    clinical trials and medical studies.
-                                </p>
+                                <p>Accelerate research with AI-powered analytics for clinical trials and studies.</p>
                                 <ul class="solution-features">
                                     <li><i class="fas fa-check-circle"></i> Patient cohort analysis</li>
                                     <li><i class="fas fa-check-circle"></i> Predictive modeling</li>
                                     <li><i class="fas fa-check-circle"></i> Real-time data visualization</li>
                                     <li><i class="fas fa-check-circle"></i> Regulatory compliance tools</li>
                                 </ul>
-                                <a href="#" class="btn-primary">
-                                    <i class="fas fa-book"></i> Explore Research Tools
-                                </a>
+                                <a href="#" class="btn-primary">Explore Tools</a>
                             </div>
-                            <div class="solution-image" data-aos="fade-left">
-                                <img src="assets/research-dashboard.jpg" alt="Research Dashboard" class="zoom-animate">
+                            <div class="solution-image">
+                                <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80"
+                                    alt="Research Dashboard">
                             </div>
                         </div>
                     </div>
@@ -352,174 +2312,382 @@
         </div>
     </section>
 
-    <!-- Testimonials -->
-    <section class="testimonials-section" id="testimonials">
+    <!-- Blog Preview Section -->
+    <section class="blog-section fade-in">
         <div class="container">
-            <div class="section-header" data-aos="fade-up">
-                <h2 class="section-title">Trusted by Healthcare Professionals</h2>
-                <p class="section-subtitle">
-                    Hear from those who've transformed their practice with HealVerse
-                </p>
+            <div class="section-header">
+                <h2 class="section-title">Latest Insights</h2>
+                <p class="section-subtitle">Explore our recent articles and case studies</p>
             </div>
-
-            <div class="testimonials-slider">
-                <div class="testimonial-card" data-aos="fade-up">
-                    <div class="testimonial-content">
-                        <div class="quote-icon">
-                            <i class="fas fa-quote-left"></i>
-                        </div>
-                        <p class="testimonial-text">
-                            HealVerse has revolutionized how we diagnose and treat patients. The AI recommendations have
-                            improved our diagnostic accuracy by 30% and reduced treatment time significantly.
-                        </p>
-                        <div class="testimonial-author">
-                            <img src="assets/doctor-1.jpg" alt="Dr. Sarah Johnson" class="author-img pulse-animate">
-                            <div class="author-info">
-                                <h4>Dr. Sarah Johnson</h4>
-                                <p>Chief of Medicine, Boston General</p>
-                            </div>
-                        </div>
+            <div class="blog-grid">
+                <div class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1505751172876-fa1923c5c528?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80"
+                        alt="AI in Healthcare" class="blog-img">
+                    <div class="blog-card-content">
+                        <h3>AI in Healthcare: The Future of Diagnostics</h3>
+                        <p>Learn how AI is transforming diagnostic accuracy and patient outcomes.</p>
+                        <a href="#" class="blog-link">Read More <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
-
-                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="testimonial-content">
-                        <div class="quote-icon">
-                            <i class="fas fa-quote-left"></i>
-                        </div>
-                        <p class="testimonial-text">
-                            The predictive analytics have been game-changing for our ICU. We're now able to intervene
-                            before critical situations develop.
-                        </p>
-                        <div class="testimonial-author">
-                            <img src="assets/doctor-2.jpg" alt="Dr. Michael Chen" class="author-img pulse-animate">
-                            <div class="author-info">
-                                <h4>Dr. Michael Chen</h4>
-                                <p>ICU Director, Mayo Clinic</p>
-                            </div>
-                        </div>
+                <div class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80"
+                        alt="Telemedicine Trends" class="blog-img">
+                    <div class="blog-card-content">
+                        <h3>Telemedicine Trends in 2025</h3>
+                        <p>Discover the latest advancements in virtual care platforms.</p>
+                        <a href="#" class="blog-link">Read More <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
-
-                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="testimonial-content">
-                        <div class="quote-icon">
-                            <i class="fas fa-quote-left"></i>
-                        </div>
-                        <p class="testimonial-text">
-                            Our patient satisfaction scores increased by 45% after implementing HealVerse's telemedicine
-                            platform.
-                        </p>
-                        <div class="testimonial-author">
-                            <img src="assets/doctor-3.jpg" alt="Dr. Emily Rodriguez" class="author-img pulse-animate">
-                            <div class="author-info">
-                                <h4>Dr. Emily Rodriguez</h4>
-                                <p>Medical Director, Stanford Health</p>
-                            </div>
-                        </div>
+                <div class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80"
+                        alt="Case Study" class="blog-img">
+                    <div class="blog-card-content">
+                        <h3>Case Study: Reducing Readmissions</h3>
+                        <p>How HealVerse helped a hospital reduce readmissions by 25%.</p>
+                        <a href="#" class="blog-link">Read More <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
-            </div>
-
-            <div class="testimonials-cta" data-aos="fade-up">
-                <a href="#" class="btn-secondary">
-                    <i class="fas fa-book-open"></i> Read More Success Stories
-                </a>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
+    <!-- Testimonials Carousel -->
+    <section class="testimonials-section fade-in" id="testimonials">
         <div class="container">
-            <div class="cta-content" data-aos="zoom-in">
+            <div class="section-header">
+                <h2 class="section-title">What Our Clients Say</h2>
+                <p class="section-subtitle">Trusted by healthcare professionals worldwide</p>
+            </div>
+            <div class="testimonials-carousel">
+                <div class="carousel-inner">
+                    <div class="testimonial-card active">
+                        <div class="testimonial-content">
+                            <i class="fas fa-quote-left quote-icon"></i>
+                            <p class="testimonial-text">
+                                HealVerse has transformed our diagnostic accuracy and patient outcomes. The AI-powered
+                                insights have become indispensable to our practice, reducing diagnostic errors by 40%
+                                and improving treatment efficacy.
+                            </p>
+                            <div class="testimonial-author">
+                                <img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80"
+                                    alt="Dr. Sarah Johnson" class="author-img">
+                                <div class="author-info">
+                                    <h4>Dr. Sarah Johnson</h4>
+                                    <p>Chief of Medicine, Boston General</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <i class="fas fa-quote-left quote-icon"></i>
+                            <p class="testimonial-text">
+                                The predictive analytics capabilities have allowed us to identify at-risk patients weeks
+                                before symptoms manifest. This proactive approach has dramatically improved our
+                                preventive care outcomes.
+                            </p>
+                            <div class="testimonial-author">
+                                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80"
+                                    alt="Dr. Michael Chen" class="author-img">
+                                <div class="author-info">
+                                    <h4>Dr. Michael Chen</h4>
+                                    <p>Cardiology Director, Stanford Health</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <i class="fas fa-quote-left quote-icon"></i>
+                            <p class="testimonial-text">
+                                Implementing HealVerse's telemedicine platform enabled us to expand our reach to rural
+                                communities while maintaining the highest standards of care. Patient satisfaction scores
+                                have never been higher.
+                            </p>
+                            <div class="testimonial-author">
+                                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80"
+                                    alt="Dr. Aisha Khan" class="author-img">
+                                <div class="author-info">
+                                    <h4>Dr. Aisha Khan</h4>
+                                    <p>Telemedicine Director, Mayo Clinic</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-controls">
+                    <button class="carousel-prev" aria-label="Previous testimonial">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="carousel-dots">
+                        <button class="carousel-dot active" aria-label="Show testimonial 1"></button>
+                        <button class="carousel-dot" aria-label="Show testimonial 2"></button>
+                        <button class="carousel-dot" aria-label="Show testimonial 3"></button>
+                    </div>
+                    <button class="carousel-next" aria-label="Next testimonial">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing-section fade-in" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Simple, Transparent Pricing</h2>
+                <p class="section-subtitle">Choose the plan that fits your healthcare needs</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Starter</h3>
+                    <div class="pricing-price">
+                        <span class="price">$99</span>
+                        <span class="period">/month</span>
+                    </div>
+                    <p class="pricing-description">Perfect for individual practitioners</p>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check-circle"></i> Basic diagnostics</li>
+                        <li><i class="fas fa-check-circle"></i> 100 patient records</li>
+                        <li><i class="fas fa-check-circle"></i> Email support</li>
+                        <li><i class="fas fa-check-circle"></i> Standard security</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary">Get Started</a>
+                </div>
+                <div class="pricing-card featured">
+                    <div class="featured-badge">Most Popular</div>
+                    <h3>Professional</h3>
+                    <div class="pricing-price">
+                        <span class="price">$299</span>
+                        <span class="period">/month</span>
+                    </div>
+                    <p class="pricing-description">Ideal for small to medium practices</p>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check-circle"></i> Advanced diagnostics</li>
+                        <li><i class="fas fa-check-circle"></i> Unlimited patient records</li>
+                        <li><i class="fas fa-check-circle"></i> Priority support</li>
+                        <li><i class="fas fa-check-circle"></i> HIPAA compliance</li>
+                        <li><i class="fas fa-check-circle"></i> Basic telemedicine</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary">Get Started</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>Enterprise</h3>
+                    <div class="pricing-price">
+                        <span class="price">Custom</span>
+                    </div>
+                    <p class="pricing-description">Tailored for large healthcare systems</p>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check-circle"></i> Premium diagnostics</li>
+                        <li><i class="fas fa-check-circle"></i> Multi-location support</li>
+                        <li><i class="fas fa-check-circle"></i> 24/7 dedicated support</li>
+                        <li><i class="fas fa-check-circle"></i> Advanced security</li>
+                        <li><i class="fas fa-check-circle"></i> Full telemedicine suite</li>
+                        <li><i class="fas fa-check-circle"></i> API access</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section fade-in" id="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <p class="section-subtitle">Find answers to common questions about HealVerse</p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        How does HealVerse ensure patient data privacy?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>HealVerse employs end-to-end encryption, HIPAA-compliant data handling, and rigorous access
+                            controls. Our platform undergoes regular security audits and maintains SOC 2 Type II
+                            certification. Patient data is never sold or shared without explicit consent.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        What medical specialties does HealVerse support?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Our platform currently supports over 30 specialties including cardiology, oncology,
+                            neurology, radiology, and primary care. We continuously expand our specialty modules based
+                            on clinical needs and partner feedback.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        How accurate are the AI diagnostic suggestions?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Our diagnostic models achieve 92-97% accuracy across different specialties, validated through
+                            clinical trials. However, all AI suggestions are presented as decision support tools, with
+                            final determinations always made by qualified healthcare providers.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        Can HealVerse integrate with our existing EHR system?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes, we offer seamless integration with all major EHR systems including Epic, Cerner, and
+                            Allscripts. Our implementation team handles the entire integration process with minimal
+                            disruption to your workflow.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        What training is provided for new users?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>We provide comprehensive onboarding including live training sessions, video tutorials, and
+                            detailed documentation. Our customer success team offers ongoing support and quarterly
+                            training updates as we release new features.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="cta-section fade-in">
+        <div class="container">
+            <div class="cta-content">
                 <h2 class="cta-title">Ready to Transform Your Healthcare Practice?</h2>
-                <p class="cta-text">
-                    Join thousands of healthcare providers using HealVerse to deliver better patient outcomes.
-                </p>
-                <div class="cta-actions">
-                    <a href="#" class="btn-primary btn-lg pulse-animate">
-                        <i class="fas fa-calendar-check"></i> Schedule Demo
-                    </a>
-                    <a href="#" class="btn-secondary btn-lg pulse-animate" style="animation-delay: 0.2s">
-                        <i class="fas fa-phone-alt"></i> Contact Sales
-                    </a>
+                <p class="cta-text">Join thousands of healthcare providers leveraging AI to deliver better patient
+                    outcomes and streamline operations.</p>
+                <div class="cta-form">
+                    <h3>Get Started in 3 Simple Steps</h3>
+                    <div class="form-steps">
+                        <div class="form-step active" id="step1">
+                            <input type="text" placeholder="Your Name" aria-label="Name" required>
+                            <input type="email" placeholder="Your Email" aria-label="Email" required>
+                            <button type="button" class="btn btn-primary next-step">Continue</button>
+                        </div>
+                        <div class="form-step" id="step2">
+                            <select aria-label="Organization Type" required>
+                                <option value="">Select Organization Type</option>
+                                <option value="hospital">Hospital</option>
+                                <option value="clinic">Clinic</option>
+                                <option value="private">Private Practice</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <input type="text" placeholder="Organization Name" aria-label="Organization Name">
+                            <div class="step-actions">
+                                <button type="button" class="btn btn-secondary prev-step">Back</button>
+                                <button type="button" class="btn btn-primary next-step">Continue</button>
+                            </div>
+                        </div>
+                        <div class="form-step" id="step3">
+                            <select aria-label="Interested In" required>
+                                <option value="">What are you interested in?</option>
+                                <option value="diagnostics">AI Diagnostics</option>
+                                <option value="telemedicine">Telemedicine</option>
+                                <option value="analytics">Predictive Analytics</option>
+                                <option value="all">Full Platform</option>
+                            </select>
+                            <textarea placeholder="Any specific needs or questions?"
+                                aria-label="Additional Information"></textarea>
+                            <div class="step-actions">
+                                <button type="button" class="btn btn-secondary prev-step">Back</button>
+                                <button type="submit" class="btn btn-primary">Submit Request</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer fade-in">
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-col footer-about">
+                <div class="footer-col">
                     <div class="footer-logo">
-                        <span class="logo-icon">⚕</span>
+                        <span>⚕</span>
                         <span>HealVerse</span>
                     </div>
                     <p class="footer-about-text">
-                        Revolutionizing healthcare through AI-powered diagnostics, monitoring, and treatment solutions.
+                        HealVerse is transforming healthcare through AI-powered solutions that enhance diagnostics,
+                        improve patient outcomes, and streamline clinical workflows.
                     </p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Your Email" aria-label="Email for newsletter">
+                        <button class="btn btn-primary">Subscribe</button>
+                    </div>
                     <div class="footer-social">
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
-
                 <div class="footer-col">
                     <h4 class="footer-title">Solutions</h4>
                     <ul class="footer-links">
-                        <li><a href="#">For Hospitals</a></li>
-                        <li><a href="#">For Clinics</a></li>
+                        <li><a href="#">AI Diagnostics</a></li>
                         <li><a href="#">Telemedicine</a></li>
-                        <li><a href="#">Medical Research</a></li>
-                        <li><a href="#">Health Systems</a></li>
+                        <li><a href="#">Predictive Analytics</a></li>
+                        <li><a href="#">Clinical Workflows</a></li>
+                        <li><a href="#">Patient Engagement</a></li>
                     </ul>
                 </div>
-
-                <div class="footer-col">
-                    <h4 class="footer-title">Resources</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">Documentation</a></li>
-                        <li><a href="#">API Reference</a></li>
-                        <li><a href="#">Case Studies</a></li>
-                        <li><a href="#">White Papers</a></li>
-                        <li><a href="#">Blog</a></li>
-                    </ul>
-                </div>
-
                 <div class="footer-col">
                     <h4 class="footer-title">Company</h4>
                     <ul class="footer-links">
                         <li><a href="#">About Us</a></li>
                         <li><a href="#">Leadership</a></li>
                         <li><a href="#">Careers</a></li>
-                        <li><a href="#">Press</a></li>
+                        <li><a href="#">News & Press</a></li>
                         <li><a href="#">Contact</a></li>
                     </ul>
                 </div>
-
                 <div class="footer-col">
-                    <h4 class="footer-title">Get In Touch</h4>
+                    <h4 class="footer-title">Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Case Studies</a></li>
+                        <li><a href="#">Webinars</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">API Reference</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4 class="footer-title">Contact Us</h4>
                     <ul class="footer-contact">
-                        <li><i class="fas fa-map-marker-alt"></i> 123 Medical Drive, San Francisco, CA</li>
-                        <li><i class="fas fa-phone-alt"></i> (800) 555-HEAL</li>
-                        <li><i class="fas fa-envelope"></i> info@healverse.com</li>
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>123 Medical Drive, San Francisco, CA 94107</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone-alt"></i>
+                            <span>+1 (800) 555-HEAL</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>info@healverse.com</span>
+                        </li>
                     </ul>
                 </div>
             </div>
-
             <div class="footer-bottom">
-                <div class="footer-copyright">
-                    &copy; 2025 HealVerse Technologies. All rights reserved.
-                </div>
+                <p class="footer-copyright">© 2025 HealVerse. All rights reserved.</p>
                 <div class="footer-legal">
                     <a href="#">Privacy Policy</a>
                     <a href="#">Terms of Service</a>
                     <a href="#">HIPAA Compliance</a>
+                    <a href="#">Cookie Settings</a>
                 </div>
             </div>
         </div>
@@ -527,53 +2695,54 @@
 
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <script>
-        // Initialize AOS animation
+        // Initialize AOS animation library
         AOS.init({
             duration: 800,
             easing: 'ease-in-out',
             once: true
         });
 
-        // Initialize typed.js
-        new Typed('.typed-text', {
-            strings: ["AI Diagnostics", "Predictive Analytics", "Remote Monitoring", "Personalized Care"],
-            typeSpeed: 50,
-            backSpeed: 30,
-            loop: true
-        });
-
-        // 3D Background Initialization
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.getElementById('3d-background').appendChild(renderer.domElement);
-
-        // Add your 3D objects here (molecules, cells, medical symbols)
-        const geometry = new THREE.SphereGeometry(1, 32, 32);
-        const material = new THREE.MeshBasicMaterial({ color: 0x00a8ff, transparent: true, opacity: 0.6 });
-        const sphere = new THREE.Mesh(geometry, material);
-        scene.add(sphere);
-
-        camera.position.z = 5;
-
-        function animate() {
-            requestAnimationFrame(animate);
-            sphere.rotation.x += 0.005;
-            sphere.rotation.y += 0.01;
-            renderer.render(scene, camera);
-        }
-        animate();
-
-        // Mobile menu toggle
+        // Mobile navigation toggle
         const navToggle = document.getElementById('navToggle');
         const navLinks = document.querySelector('.nav-links');
 
         navToggle.addEventListener('click', () => {
+            navToggle.setAttribute('aria-expanded', navToggle.getAttribute('aria-expanded') === 'false' ? 'true' : 'false');
             navToggle.classList.toggle('active');
             navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navToggle.setAttribute('aria-expanded', 'false');
+                navToggle.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Quick contact modal
+        const contactModal = document.getElementById('contactModal');
+        const quickContactBtn = document.querySelector('.quick-contact');
+        const modalCloseBtn = document.querySelector('.modal-close');
+
+        quickContactBtn.addEventListener('click', () => {
+            contactModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        modalCloseBtn.addEventListener('click', () => {
+            contactModal.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        // Close modal when clicking outside
+        contactModal.addEventListener('click', (e) => {
+            if (e.target === contactModal) {
+                contactModal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
         });
 
         // Tab functionality
@@ -588,23 +2757,196 @@
                 tabBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
 
-                // Show corresponding tab content
-                tabPanes.forEach(pane => {
-                    pane.classList.remove('active');
-                    if (pane.id === tabId) {
-                        pane.classList.add('active');
-                    }
-                });
+                // Update active tab pane
+                tabPanes.forEach(pane => pane.classList.remove('active'));
+                document.getElementById(tabId).classList.add('active');
             });
+        });
+
+        // FAQ accordion
+        const faqQuestions = document.querySelectorAll('.faq-question');
+
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const isExpanded = question.getAttribute('aria-expanded') === 'true';
+                question.setAttribute('aria-expanded', !isExpanded);
+
+                const answer = question.nextElementSibling;
+                answer.classList.toggle('active');
+
+                // Close other open FAQs
+                if (!isExpanded) {
+                    faqQuestions.forEach(q => {
+                        if (q !== question && q.getAttribute('aria-expanded') === 'true') {
+                            q.setAttribute('aria-expanded', 'false');
+                            q.nextElementSibling.classList.remove('active');
+                        }
+                    });
+                }
+            });
+        });
+
+        // Testimonial carousel
+        let currentTestimonial = 0;
+        const testimonials = document.querySelectorAll('.testimonial-card');
+        const dots = document.querySelectorAll('.carousel-dot');
+        const prevBtn = document.querySelector('.carousel-prev');
+        const nextBtn = document.querySelector('.carousel-next');
+
+        function showTestimonial(index) {
+            testimonials.forEach((testimonial, i) => {
+                testimonial.classList.toggle('active', i === index);
+            });
+
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+
+            currentTestimonial = index;
+        }
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => showTestimonial(index));
+        });
+
+        prevBtn.addEventListener('click', () => {
+            showTestimonial((currentTestimonial - 1 + testimonials.length) % testimonials.length);
+        });
+
+        nextBtn.addEventListener('click', () => {
+            showTestimonial((currentTestimonial + 1) % testimonials.length);
+        });
+
+        // Multi-step form
+        const formSteps = document.querySelectorAll('.form-step');
+        const nextStepBtns = document.querySelectorAll('.next-step');
+        const prevStepBtns = document.querySelectorAll('.prev-step');
+        let currentStep = 0;
+
+        function showStep(stepIndex) {
+            formSteps.forEach((step, i) => {
+                step.classList.toggle('active', i === stepIndex);
+            });
+
+            currentStep = stepIndex;
+        }
+
+        nextStepBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (currentStep < formSteps.length - 1) {
+                    showStep(currentStep + 1);
+                }
+            });
+        });
+
+        prevStepBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (currentStep > 0) {
+                    showStep(currentStep - 1);
+                }
+            });
+        });
+
+        // Scroll animations
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const slideLeftElements = document.querySelectorAll('.slide-in-left');
+        const slideRightElements = document.querySelectorAll('.slide-in-right');
+        const scaleElements = document.querySelectorAll('.scale-in');
+
+        function checkScroll() {
+            fadeElements.forEach(el => {
+                if (isElementInViewport(el)) {
+                    el.classList.add('appear');
+                }
+            });
+
+            slideLeftElements.forEach(el => {
+                if (isElementInViewport(el)) {
+                    el.classList.add('appear');
+                }
+            });
+
+            slideRightElements.forEach(el => {
+                if (isElementInViewport(el)) {
+                    el.classList.add('appear');
+                }
+            });
+
+            scaleElements.forEach(el => {
+                if (isElementInViewport(el)) {
+                    el.classList.add('appear');
+                }
+            });
+        }
+
+        function isElementInViewport(el) {
+            const rect = el.getBoundingClientRect();
+            return (
+                rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.75 &&
+                rect.bottom >= 0
+            );
+        }
+
+        // Initial check
+        checkScroll();
+
+        // Check on scroll
+        window.addEventListener('scroll', checkScroll);
+
+        // Animated counter
+        const counters = document.querySelectorAll('.stat-number');
+        const speed = 200;
+
+        function animateCounters() {
+            counters.forEach(counter => {
+                if (isElementInViewport(counter) && !counter.classList.contains('animated')) {
+                    counter.classList.add('animated');
+
+                    const target = +counter.getAttribute('data-count');
+                    const count = +counter.innerText;
+                    const increment = target / speed;
+
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + increment);
+                        setTimeout(animateCounters, 1);
+                    } else {
+                        counter.innerText = target;
+                    }
+                }
+            });
+        }
+
+        // Initial check
+        animateCounters();
+
+        // Check on scroll
+        window.addEventListener('scroll', animateCounters);
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
         });
 
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
             });
         });
     </script>
