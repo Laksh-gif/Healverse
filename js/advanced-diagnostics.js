@@ -1,31 +1,24 @@
-// =============================
-// Advanced Diagnostics JavaScript
-// =============================
-
 class AdvancedDiagnostics {
     constructor() {
         this.chatMessages = document.getElementById('chatMessages');
         this.messageInput = document.getElementById('messageInput');
         this.sendBtn = document.getElementById('sendBtn');
-        this.typingIndicator = document.getElementById('typingIndicator');
+        this.typingIndicator = document.getElementById('typingIndicator') || { style: { display: 'none' } };
         this.charCount = document.querySelector('.char-count');
         this.navToggle = document.getElementById('navToggle');
         this.navLinks = document.querySelector('.nav-links');
-        
-        // Google AI API configuration
+
         this.apiKey = 'AIzaSyAVsKnmNlxvfyGpQ3Sh9TW214KLStstI4k';
         this.apiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
-        
-        // Rate limiting
+
         this.lastApiCall = 0;
-        this.apiCooldown = 1000; // 1 second between API calls
-        
+        this.apiCooldown = 1000;
+
         this.isTyping = false;
         this.currentMessageId = 0;
-        
-        // System prompt for medical advice
+
         this.systemPrompt = "You are a helpful AI assistant for a medical advice platform named Healverse. While you are not a substitute for actual medical advice, you will be as helpful as possible, giving advice to the user. Make sure not to worry the user. Respond to the following user message:";
-        
+
         this.init();
     }
 
@@ -37,7 +30,7 @@ class AdvancedDiagnostics {
     }
 
     addWelcomeMessage() {
-        const welcomeMessage = `Hello! I'm your Healverse AI health assistant. I'm here to provide general health information and guidance. 
+        const msg = `Hello! I'm your Healverse AI health assistant. I'm here to provide general health information and guidance. 
 
 🩺 I can help with:
 • Understanding symptoms and when to seek care
@@ -48,27 +41,29 @@ class AdvancedDiagnostics {
 ⚠️ Important: I'm not a substitute for professional medical advice. For specific medical concerns, diagnoses, or emergencies, please consult with qualified healthcare professionals.
 
 How can I assist you with your health questions today?`;
-        
-        this.addMessage(welcomeMessage, 'assistant');
+
+        this.addMessage(msg, 'assistant');
     }
 
     setupEventListeners() {
-        // Send message
-        this.sendBtn.addEventListener('click', () => this.sendMessage());
-        this.messageInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                this.sendMessage();
-            }
-        });
+        if (this.sendBtn) {
+            this.sendBtn.addEventListener('click', () => this.sendMessage());
+        }
 
-        // Auto-resize textarea
-        this.messageInput.addEventListener('input', () => {
-            this.adjustTextareaHeight();
-            this.updateCharCount();
-        });
+        if (this.messageInput) {
+            this.messageInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    this.sendMessage();
+                }
+            });
 
-        // Quick actions
+            this.messageInput.addEventListener('input', () => {
+                this.adjustTextareaHeight();
+                this.updateCharCount();
+            });
+        }
+
         document.querySelectorAll('.quick-action').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const action = e.currentTarget.dataset.action;
@@ -76,7 +71,6 @@ How can I assist you with your health questions today?`;
             });
         });
 
-        // Suggestion chips
         document.querySelectorAll('.suggestion-chip').forEach(chip => {
             chip.addEventListener('click', (e) => {
                 const text = e.currentTarget.textContent;
@@ -87,28 +81,19 @@ How can I assist you with your health questions today?`;
             });
         });
 
-        // Chat actions
-        document.querySelector('[title="Clear Chat"]').addEventListener('click', () => {
-            this.clearChat();
-        });
+        const clearBtn = document.querySelector('[title="Clear Chat"]');
+        if (clearBtn) clearBtn.addEventListener('click', () => this.clearChat());
 
-        document.querySelector('[title="Export Chat"]').addEventListener('click', () => {
-            this.exportChat();
-        });
+        const exportBtn = document.querySelector('[title="Export Chat"]');
+        if (exportBtn) exportBtn.addEventListener('click', () => this.exportChat());
 
-        // Voice input (placeholder)
-        document.getElementById('voiceBtn').addEventListener('click', () => {
-            this.startVoiceInput();
-        });
+        const voiceBtn = document.getElementById('voiceBtn');
+        if (voiceBtn) voiceBtn.addEventListener('click', () => this.startVoiceInput());
 
-        // Navigation toggle
         if (this.navToggle) {
-            this.navToggle.addEventListener('click', () => {
-                this.toggleNavigation();
-            });
+            this.navToggle.addEventListener('click', () => this.toggleNavigation());
         }
 
-        // Close mobile nav when clicking links
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', () => {
                 if (this.navLinks.classList.contains('active')) {
@@ -120,61 +105,44 @@ How can I assist you with your health questions today?`;
 
     async sendMessage() {
         const message = this.messageInput.value.trim();
-        if (!message || this.isTyping) return;
+        if (!message || this.isTyping || message.length > 500) return;
 
-        // Add user message
         this.addMessage(message, 'user');
-        
-        // Clear input
         this.messageInput.value = '';
         this.adjustTextareaHeight();
         this.updateCharCount();
-
-        // Show typing indicator and generate response
         this.showTypingIndicator();
-        
-        // Add a small delay to make the interaction feel more natural
+
         setTimeout(() => {
             this.generateAIResponse(message);
         }, 500);
     }
 
-    addMessage(content, sender = 'assistant', timestamp = null) {
+    addMessage(content, sender = 'assistant') {
         const messageId = ++this.currentMessageId;
-        const time = timestamp || this.getCurrentTime();
-        
+        const time = this.getCurrentTime();
+
         const messageDiv = document.createElement('div');
         messageDiv.className = `message ${sender}-message fade-in`;
         messageDiv.dataset.messageId = messageId;
 
-        const avatarIcon = sender === 'user' ? 'fas fa-user' : 'fas fa-robot';
-        
+        const avatar = sender === 'user' ? 'fas fa-user' : 'fas fa-robot';
+
         messageDiv.innerHTML = `
-            <div class="message-avatar">
-                <i class="${avatarIcon}"></i>
-            </div>
+            <div class="message-avatar"><i class="${avatar}"></i></div>
             <div class="message-content">
-                <div class="message-bubble">
-                    ${this.formatMessage(content)}
-                </div>
+                <div class="message-bubble">${this.formatMessage(content)}</div>
                 <div class="message-time">${time}</div>
             </div>
         `;
 
         this.chatMessages.appendChild(messageDiv);
         this.scrollToBottom();
-        
         return messageId;
     }
 
     formatMessage(content) {
-        // Convert line breaks to <br> tags
-        content = content.replace(/\n/g, '<br>');
-        
-        // Make links clickable (simple regex)
-        content = content.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
-        
-        return `<p>${content}</p>`;
+        return `<p>${content.replace(/\n/g, '<br>').replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>')}</p>`;
     }
 
     showTypingIndicator() {
@@ -191,41 +159,25 @@ How can I assist you with your health questions today?`;
     async generateAIResponse(userMessage) {
         try {
             const response = await this.callGoogleAI(userMessage);
-            this.hideTypingIndicator();
             this.addMessage(response);
         } catch (error) {
-            console.error('AI API Error:', error);
+            const fallback = this.getContextualResponse(userMessage);
+            const fallbackMsg = fallback[Math.floor(Math.random() * fallback.length)];
+            this.addMessage(`${fallbackMsg}\n\n*Note: I'm currently experiencing connectivity issues.*`);
+        } finally {
             this.hideTypingIndicator();
-            
-            // Check if it's a network error
-            if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
-                this.addMessage("I'm having trouble connecting to my knowledge base right now. Please check your internet connection and try again. For urgent medical concerns, please contact your healthcare provider directly.");
-            } else {
-                // Fallback to contextual responses if API fails
-                const fallbackResponses = this.getContextualResponse(userMessage);
-                const fallbackResponse = fallbackResponses[Math.floor(Math.random() * fallbackResponses.length)];
-                this.addMessage(`${fallbackResponse}\n\n*Note: I'm currently experiencing connectivity issues. For the best experience and more detailed assistance, please try again later.*`);
-            }
         }
     }
 
     async callGoogleAI(userMessage) {
-        // Rate limiting check
         const now = Date.now();
-        const timeSinceLastCall = now - this.lastApiCall;
-        if (timeSinceLastCall < this.apiCooldown) {
-            await new Promise(resolve => setTimeout(resolve, this.apiCooldown - timeSinceLastCall));
-        }
+        const wait = this.apiCooldown - (now - this.lastApiCall);
+        if (wait > 0) await new Promise(res => setTimeout(res, wait));
         this.lastApiCall = Date.now();
-        
+
         const fullPrompt = `${this.systemPrompt} ${userMessage}`;
-        
-        const requestBody = {
-            contents: [{
-                parts: [{
-                    text: fullPrompt
-                }]
-            }],
+        const body = {
+            contents: [{ parts: [{ text: fullPrompt }] }],
             generationConfig: {
                 temperature: 0.7,
                 topK: 40,
@@ -233,127 +185,56 @@ How can I assist you with your health questions today?`;
                 maxOutputTokens: 1024,
             },
             safetySettings: [
-                {
-                    category: "HARM_CATEGORY_HARASSMENT",
-                    threshold: "BLOCK_MEDIUM_AND_ABOVE"
-                },
-                {
-                    category: "HARM_CATEGORY_HATE_SPEECH",
-                    threshold: "BLOCK_MEDIUM_AND_ABOVE"
-                },
-                {
-                    category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-                    threshold: "BLOCK_MEDIUM_AND_ABOVE"
-                },
-                {
-                    category: "HARM_CATEGORY_DANGEROUS_CONTENT",
-                    threshold: "BLOCK_MEDIUM_AND_ABOVE"
-                }
+                { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
+                { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
+                { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
+                { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_MEDIUM_AND_ABOVE" }
             ]
         };
 
-        const response = await fetch(`${this.apiUrl}?key=${this.apiKey}`, {
+        const res = await fetch(`${this.apiUrl}?key=${this.apiKey}`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestBody)
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
         });
 
-        if (!response.ok) {
-            const errorData = await response.json().catch(() => null);
-            throw new Error(`API request failed: ${response.status} ${response.statusText} ${errorData ? JSON.stringify(errorData) : ''}`);
+        const data = await res.json();
+        const part = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+        if (part) return part;
+
+        if (data?.candidates?.[0]?.finishReason === 'SAFETY') {
+            return "I'm being cautious with the response. Please consult a qualified professional for medical advice.";
         }
 
-        const data = await response.json();
-        
-        if (data.candidates && data.candidates[0] && data.candidates[0].content) {
-            return data.candidates[0].content.parts[0].text;
-        } else if (data.candidates && data.candidates[0] && data.candidates[0].finishReason === 'SAFETY') {
-            return "I understand you're seeking medical advice, but I need to be careful about the information I provide. For specific medical concerns, I strongly recommend consulting with a qualified healthcare professional who can provide personalized guidance based on your individual situation.";
-        } else {
-            throw new Error('Invalid response format from API');
-        }
+        throw new Error('No valid AI response received.');
     }
 
     getContextualResponse(message) {
-        const lowerMessage = message.toLowerCase();
-        
-        // Symptom-related responses
-        if (lowerMessage.includes('pain') || lowerMessage.includes('hurt') || lowerMessage.includes('ache')) {
-            return [
-                "I understand you're experiencing pain. Can you describe the location, intensity (1-10 scale), and how long you've been experiencing it? This will help me provide better guidance.",
-                "Pain can have various causes. For immediate severe pain, please consider contacting a healthcare provider. For general pain management, I can suggest some initial approaches based on more details about your symptoms.",
-                "Let me help you assess your pain. Please describe: Where is the pain? When did it start? Is it constant or intermittent? Any triggers that make it better or worse?"
-            ];
-        }
-        
-        // Vital signs related
-        else if (lowerMessage.includes('blood pressure') || lowerMessage.includes('bp')) {
-            return [
-                "Blood pressure monitoring is important for cardiovascular health. Normal BP is typically below 120/80 mmHg. What are your recent readings? I can help interpret them and suggest when to consult a doctor.",
-                "For accurate blood pressure readings, ensure you're relaxed, seated comfortably, and avoid caffeine 30 minutes before. What specific concerns do you have about your blood pressure?",
-                "Blood pressure can be affected by many factors including stress, diet, exercise, and medications. Share your readings and I'll help you understand what they mean."
-            ];
-        }
-        
-        // Medication related
-        else if (lowerMessage.includes('medication') || lowerMessage.includes('medicine') || lowerMessage.includes('drug')) {
-            return [
-                "I can provide general information about medications, but always consult your healthcare provider for specific medical advice. What medication questions do you have?",
-                "Medication management is crucial for treatment effectiveness. Are you asking about interactions, side effects, dosing, or something else specific?",
-                "For medication concerns, it's important to speak with your doctor or pharmacist. I can provide general educational information. What would you like to know?"
-            ];
-        }
-        
-        // Lifestyle and prevention
-        else if (lowerMessage.includes('diet') || lowerMessage.includes('exercise') || lowerMessage.includes('lifestyle')) {
-            return [
-                "Lifestyle modifications can significantly impact health outcomes. Are you looking for advice on diet, exercise, sleep, stress management, or other lifestyle factors?",
-                "A balanced approach to health includes proper nutrition, regular physical activity, adequate sleep, and stress management. What area would you like to focus on?",
-                "Preventive care through healthy lifestyle choices is key to long-term wellness. I can provide evidence-based recommendations for various health goals."
-            ];
-        }
-        
-        // Emergency situations
-        else if (lowerMessage.includes('emergency') || lowerMessage.includes('urgent') || lowerMessage.includes('911')) {
-            return [
-                "⚠️ For medical emergencies, please call 911 immediately or go to your nearest emergency room. Don't rely on online consultations for urgent medical situations.",
-                "If you're experiencing a medical emergency such as chest pain, difficulty breathing, severe bleeding, or loss of consciousness, seek immediate medical attention by calling 911.",
-                "Emergency situations require immediate professional medical care. Please contact emergency services (911) or visit an emergency room right away."
-            ];
-        }
-        
-        // General health questions
-        else if (lowerMessage.includes('symptom') || lowerMessage.includes('feel') || lowerMessage.includes('sick')) {
-            return [
-                "I can help you understand common symptoms, but remember that proper diagnosis requires professional medical evaluation. What symptoms are you experiencing?",
-                "Symptom assessment is complex and depends on many factors. While I can provide general information, please consult a healthcare provider for proper evaluation and diagnosis.",
-                "Many symptoms can have multiple causes. For accurate assessment, it's best to consult with a healthcare professional who can examine you properly."
-            ];
-        }
-        
-        // Default responses
-        else {
-            return [
-                "I'm here to help with your health questions! I can provide information about symptoms, general health guidance, and when to seek professional care. What specific health topic interests you?",
-                "As your AI health assistant, I can discuss various health topics including symptoms, preventive care, lifestyle factors, and general medical information. How can I assist you today?",
-                "I'm designed to provide health education and general guidance. For specific medical concerns, always consult with qualified healthcare professionals. What would you like to learn about?",
-                "Thank you for your message. I can help with health information, wellness tips, and guidance on when to seek professional medical care. What's on your mind regarding your health?"
-            ];
-        }
+        const msg = message.toLowerCase();
+        if (msg.includes('pain') || msg.includes('ache')) return [
+            "Please describe your pain's location, severity, and duration. That helps guide advice.",
+            "Pain can vary in cause and treatment. Can you share more detail about what you're feeling?"
+        ];
+        if (msg.includes('bp') || msg.includes('blood pressure')) return [
+            "Blood pressure under 120/80 is typically healthy. What were your recent readings?",
+            "I can help interpret BP values. When and how did you measure it?"
+        ];
+        return [
+            "I'm here to help with general health questions. What would you like to talk about?",
+            "Let me know your symptoms or health concerns. I'm ready to assist."
+        ];
     }
 
     handleQuickAction(action) {
-        const actionMessages = {
+        const map = {
             symptoms: "I'd like help analyzing my symptoms",
             vitals: "Can you help me understand my vital signs?",
             medication: "I have questions about my medications",
             lifestyle: "I want advice on healthy lifestyle choices"
         };
-
-        if (actionMessages[action]) {
-            this.messageInput.value = actionMessages[action];
+        if (map[action]) {
+            this.messageInput.value = map[action];
             this.adjustTextareaHeight();
             this.updateCharCount();
             this.sendMessage();
@@ -368,14 +249,7 @@ How can I assist you with your health questions today?`;
     updateCharCount() {
         const count = this.messageInput.value.length;
         this.charCount.textContent = `${count}/500`;
-        
-        if (count > 450) {
-            this.charCount.style.color = 'var(--warning)';
-        } else if (count > 400) {
-            this.charCount.style.color = 'var(--secondary)';
-        } else {
-            this.charCount.style.color = 'var(--gray)';
-        }
+        this.charCount.style.color = count > 450 ? 'var(--warning)' : count > 400 ? 'var(--secondary)' : 'var(--gray)';
     }
 
     scrollToBottom() {
@@ -387,7 +261,7 @@ How can I assist you with your health questions today?`;
     }
 
     clearChat() {
-        if (confirm('Are you sure you want to clear the chat history?')) {
+        if (confirm('Clear chat history?')) {
             this.chatMessages.innerHTML = '';
             this.currentMessageId = 0;
             this.addWelcomeMessage();
@@ -395,192 +269,66 @@ How can I assist you with your health questions today?`;
     }
 
     exportChat() {
-        const messages = [];
-        document.querySelectorAll('.message').forEach(messageEl => {
-            const isUser = messageEl.classList.contains('user-message');
-            const content = messageEl.querySelector('.message-bubble').textContent.trim();
-            const time = messageEl.querySelector('.message-time').textContent;
-            
-            messages.push({
-                sender: isUser ? 'User' : 'AI Assistant',
-                content: content,
-                timestamp: time
-            });
+        const data = Array.from(document.querySelectorAll('.message')).map(el => ({
+            sender: el.classList.contains('user-message') ? 'User' : 'AI Assistant',
+            content: el.querySelector('.message-bubble').textContent.trim(),
+            timestamp: el.querySelector('.message-time').textContent
+        }));
+
+        const blob = new Blob([JSON.stringify({ exportDate: new Date().toISOString(), messages: data }, null, 2)], {
+            type: 'application/json'
         });
 
-        const chatData = {
-            exportDate: new Date().toISOString(),
-            messages: messages
-        };
-
-        const blob = new Blob([JSON.stringify(chatData, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
-        a.href = url;
-        a.download = `health-chat-${new Date().toISOString().split('T')[0]}.json`;
+        a.href = URL.createObjectURL(blob);
+        a.download = `chat-export-${new Date().toISOString().split('T')[0]}.json`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-        URL.revokeObjectURL(url);
     }
 
     startVoiceInput() {
-        if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-            alert('Voice input is not supported in your browser. Please type your message instead.');
+        const voiceBtn = document.getElementById('voiceBtn');
+        if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+            alert('Your browser does not support voice input.');
             return;
         }
 
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        const recognition = new SpeechRecognition();
-        
-        recognition.continuous = false;
-        recognition.interimResults = false;
-        recognition.lang = 'en-US';
+        const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const rec = new Recognition();
+        rec.lang = 'en-US';
+        rec.interimResults = false;
+        rec.continuous = false;
 
-        const voiceBtn = document.getElementById('voiceBtn');
-        const originalIcon = voiceBtn.innerHTML;
-        
-        voiceBtn.innerHTML = '<i class="fas fa-circle" style="color: var(--danger); animation: pulse 2s infinite;"></i>';
+        const iconBackup = voiceBtn.innerHTML;
+        voiceBtn.innerHTML = '<i class="fas fa-circle" style="color: red; animation: pulse 2s infinite;"></i>';
         voiceBtn.disabled = true;
 
-        recognition.onresult = (event) => {
-            const transcript = event.results[0][0].transcript;
-            this.messageInput.value = transcript;
+        rec.onresult = (e) => {
+            this.messageInput.value = e.results[0][0].transcript;
             this.adjustTextareaHeight();
             this.updateCharCount();
         };
 
-        recognition.onerror = (event) => {
-            console.error('Speech recognition error:', event.error);
-            alert('Voice input failed. Please try again or type your message.');
+        rec.onerror = () => {
+            alert('Voice input failed. Try again.');
         };
 
-        recognition.onend = () => {
-            voiceBtn.innerHTML = originalIcon;
+        rec.onend = () => {
+            voiceBtn.innerHTML = iconBackup;
             voiceBtn.disabled = false;
         };
 
-        recognition.start();
+        rec.start();
     }
 
     toggleNavigation() {
         this.navToggle.classList.toggle('active');
         this.navLinks.classList.toggle('active');
-        
-        const isOpen = this.navLinks.classList.contains('active');
-        this.navToggle.setAttribute('aria-expanded', isOpen);
+        this.navToggle.setAttribute('aria-expanded', this.navLinks.classList.contains('active'));
     }
 }
 
-// Initialize the application when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new AdvancedDiagnostics();
 });
-
-// Add some utility functions
-const utils = {
-    // Debounce function for performance optimization
-    debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
-    },
-
-    // Format date/time
-    formatDateTime(date) {
-        return new Intl.DateTimeFormat('en-US', {
-            month: 'short',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        }).format(date);
-    },
-
-    // Sanitize HTML to prevent XSS
-    sanitizeHTML(str) {
-        const temp = document.createElement('div');
-        temp.textContent = str;
-        return temp.innerHTML;
-    }
-};
-
-// Add smooth scrolling for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
-});
-
-// Add intersection observer for fade-in animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('appear');
-        }
-    });
-}, observerOptions);
-
-// Observe elements with fade-in class
-document.querySelectorAll('.fade-in').forEach(el => {
-    observer.observe(el);
-});
-
-// Handle form submissions (if any)
-document.querySelectorAll('form').forEach(form => {
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        // Add form handling logic here
-        console.log('Form submitted:', new FormData(this));
-    });
-});
-
-// Add keyboard navigation support
-document.addEventListener('keydown', (e) => {
-    // Escape key closes mobile navigation
-    if (e.key === 'Escape') {
-        const navLinks = document.querySelector('.nav-links');
-        const navToggle = document.getElementById('navToggle');
-        if (navLinks && navLinks.classList.contains('active')) {
-            navToggle.click();
-        }
-    }
-});
-
-// Add performance monitoring
-if ('performance' in window) {
-    window.addEventListener('load', () => {
-        const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
-        console.log(`Page loaded in ${loadTime}ms`);
-    });
-}
-
-// Service Worker registration for offline support (optional)
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-            .then(registration => {
-                console.log('SW registered: ', registration);
-            })
-            .catch(registrationError => {
-                console.log('SW registration failed: ', registrationError);
-            });
-    });
-}
