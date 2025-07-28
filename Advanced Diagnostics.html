@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Diagnostics - AI Health Assistant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Rubik:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style/advanced-diagnostics.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <header class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="container nav-container">
+            <a href="index.html" class="logo" aria-label="HealVerse Home">
+                <span class="logo-icon">⚕</span>
+                <span>HealVerse</span>
+            </a>
+
+            <nav class="nav-links" aria-label="Primary navigation">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="predictive-analysis.html" class="nav-link">Predictive Analysis</a>
+                <a href="treatment-planning.html" class="nav-link">Treatment Planning</a>
+                <a href="medical-management.html" class="nav-link">Medical Management</a>
+                <a href="health-habit.html" class="nav-link">Health Habits</a>
+                <a href="#" class="nav-link active">Advanced Diagnostics</a>
+            </nav>
+
+            <div class="nav-actions">
+                <a href="#" class="btn btn-secondary">Login</a>
+                <a href="#" class="btn btn-primary">Get Started</a>
+            </div>
+
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+
+            <!-- Chat Interface -->
+            <div class="chat-container" id="chat">
+                <!-- Chat Header -->
+                <div class="chat-header">
+                    <div class="assistant-info">
+                        <div class="assistant-avatar">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <div class="assistant-details">
+                            <h3>AI Health Assistant</h3>
+                            <p class="status">
+                                <span class="status-indicator online"></span>
+                                Online - Ready to help
+                            </p>
+                        </div>
+                    </div>
+                    <div class="chat-actions">
+                        <button class="action-btn" title="Clear Chat">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <button class="action-btn" title="Export Chat">
+                            <i class="fas fa-download"></i>
+                        </button>
+                        <button class="action-btn" title="Settings">
+                            <i class="fas fa-cog"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Chat Messages -->
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Welcome Message -->
+                    <div class="message assistant-message">
+                        <div class="message-avatar">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="message-content">
+                            <div class="message-bubble">
+                                <p>Hello! I'm your AI health assistant. How can I assist you today?</p>
+                                <div class="quick-actions">
+                                    <button class="quick-action" data-action="symptoms">
+                                        <i class="fas fa-thermometer-half"></i>
+                                        Symptom Analysis
+                                    </button>
+                                    <button class="quick-action" data-action="vitals">
+                                        <i class="fas fa-heartbeat"></i>
+                                        Vital Signs Check
+                                    </button>
+                                    <button class="quick-action" data-action="medication">
+                                        <i class="fas fa-pills"></i>
+                                        Medication Info
+                                    </button>
+                                    <button class="quick-action" data-action="lifestyle">
+                                        <i class="fas fa-running"></i>
+                                        Lifestyle Tips
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="message-time">8:32:39 PM</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Typing Indicator -->
+                <div class="typing-indicator" id="typingIndicator" style="display: none;">
+                    <div class="message assistant-message">
+                        <div class="message-avatar">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="message-content">
+                            <div class="typing-animation">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Input -->
+                <div class="chat-input-container">
+                    <div class="input-suggestions" id="inputSuggestions">
+                        <button class="suggestion-chip">Tell me about chest pain</button>
+                        <button class="suggestion-chip">Check my blood pressure</button>
+                        <button class="suggestion-chip">Explain my lab results</button>
+                        <button class="suggestion-chip">Healthy diet recommendations</button>
+                    </div>
+                    <div class="chat-input">
+                        <div class="input-wrapper">
+                            <textarea id="messageInput" placeholder="Ask me about your health..." rows="1" maxlength="500"></textarea>
+                            <div class="input-actions">
+                                <button class="input-btn" id="attachBtn" title="Attach File">
+                                    <i class="fas fa-paperclip"></i>
+                                </button>
+                                <button class="input-btn" id="voiceBtn" title="Voice Input">
+                                    <i class="fas fa-microphone"></i>
+                                </button>
+                                <button class="send-btn" id="sendBtn" title="Send Message">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="input-info">
+                            <span class="char-count">0/500</span>
+                            <span class="disclaimer">
+                                <i class="fas fa-info-circle"></i>
+                                For medical emergencies, call 112 immediately
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <div class="features-section">
+                <h2 class="section-title">AI Diagnostic Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3>Intelligent Analysis</h3>
+                        <p>Advanced machine learning algorithms analyze your symptoms and provide accurate insights.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Trend Monitoring</h3>
+                        <p>Track your health patterns over time with comprehensive data visualization.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Privacy First</h3>
+                        <p>Your health data is encrypted and protected with military-grade security.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3>24/7 Availability</h3>
+                        <p>Get health insights anytime, anywhere with our always-available AI assistant.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <span class="logo-icon">⚕</span>
+                        <span>HealVerse</span>
+                    </div>
+                    <p class="footer-about">
+                        Transforming healthcare with AI-powered solutions for better patient outcomes.
+                    </p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="predictive-analysis.html">Predictive Analysis</a></li>
+                        <li><a href="treatment-planning.html">Treatment Planning</a></li>
+                        <li><a href="medical-management.html">Medical Management</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope"></i> support@healverse.com</p>
+                        <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                        <p><i class="fas fa-map-marker-alt"></i> San Francisco, CA</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 HealVerse. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/advanced-diagnostics.js"></script>
+</body>
+
+</html>
